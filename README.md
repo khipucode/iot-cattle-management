@@ -33,5 +33,5 @@ O sistema combina **componentes de hardware** e **software** para criar uma solu
 
 ---
 
-## 🧱 Estrutura de Diretórios (sugestão para o repositório)
+## 🧱 Estrutura de Diretórios 
 
