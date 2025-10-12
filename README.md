@@ -59,7 +59,7 @@ O sistema combina **componentes de hardware** e **software** para criar uma solu
 | Categoria | Tecnologias |
 |------------|-------------|
 | 🐮 Identificação | RFID RC522 / Tags Mifare |
-| ⚙️ Hardware | SoC (C / SDK) |
+| ⚙️ Hardware | SoC (C) |
 | 🌍 Backend | Node.js, Express |
 | 🗄️ Banco de Dados | PostgreSQL |
 | 🧰 Infraestrutura | Docker, Docker Compose |
@@ -76,47 +76,17 @@ brinco-boi/
 │   ├── resumo_projeto.md
 │   ├── arquitetura_sistema.md
 │   └── diagramas/
-│       ├── fluxogramas/
-│       │   ├── fluxo_principal.png
-│       │   ├── cadastro_bovino.png
-│       │   └── fluxo_leitor_rfid.png
-│       ├── esquematicos/
-│       │   ├── circuito_soc_rc522.png
-│       │   └── pinout_soc.png
-│       └── telas/
-│           ├── login.png
-│           └── relatorios.png
 │
 ├── ⚙️ hardware/
 │   ├── esquemas/
-│   │   ├── rc522_soc.fzz
-│   │   └── alimentacao_3v3.png
 │   └── firmware/
 │       ├── src/
-│       │   ├── main.c
-│       │   ├── rfid_rc522.c
-│       │   ├── rfid_rc522.h
-│       │   ├── wifi.c
-│       │   └── wifi.h
 │       ├── CMakeLists.txt
 │       └── README.md
 │
 ├── 🌐 webapp/
 │   ├── frontend/
-│   │   ├── index.html
-│   │   ├── css/
-│   │   │   └── style.css
-│   │   ├── js/
-│   │   │   └── app.js
-│   │   └── img/
 │   ├── backend/
-│   │   ├── src/
-│   │   │   ├── server.js
-│   │   │   ├── routes/
-│   │   │   ├── controllers/
-│   │   │   └── models/
-│   │   ├── package.json
-│   │   └── README.md
 │   └── docker-compose.yml
 │
 ├── 🗄️ database/
@@ -125,7 +95,6 @@ brinco-boi/
 │
 └── 🧪 tests/
     ├── hardware_tests/
-    │   └── test_rc522_spi.md
     └── web_tests/
-        └── api_endpoints.http
+
 
