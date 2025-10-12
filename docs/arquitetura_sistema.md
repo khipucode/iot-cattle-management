@@ -14,3 +14,6 @@ O sistema é composto por três camadas principais:
 3. **Frontend Web:**  
    - Interface em **HTML5 + CSS + Bootstrap + JS/TS**.  
    - Exibe informações do rebanho, relatórios e históricos.
+
+
+<img src="docs/funcionamento_leitor.png" alt="Fluxograma do Leitor" width="720">
