@@ -33,5 +33,99 @@ O sistema combina **componentes de hardware** e **software** para criar uma solu
 
 ---
 
-## 🧱 Estrutura de Diretórios 
+### 🔹 Camadas do sistema
+
+| Camada | Função | Tecnologias |
+|:-------|:--------|:------------|
+| **Dispositivo** | Leitura e envio de tags RFID | SoC + RC522 (C / SDK embarcado) |
+| **Backend** | API REST e banco de dados | Node.js + Express + PostgreSQL |
+| **Frontend** | Interface web responsiva | HTML5, CSS3, Bootstrap, JS/TS |
+| **Infraestrutura** | Deploy e containerização | Docker + Docker Compose |
+
+---
+
+## 👩‍💻 Equipe
+
+| Integrante | Função |
+|-------------|--------|
+| **Leonid** | Desenvolvimento de firmware e integração do SoC |
+| **Osny** | Arquitetura do backend e banco de dados |
+| **Rayane** | Documentação técnica e design da interface |
+
+---
+
+## 🧩 Tecnologias Utilizadas
+
+| Categoria | Tecnologias |
+|------------|-------------|
+| 🐮 Identificação | RFID RC522 / Tags Mifare |
+| ⚙️ Hardware | SoC (C / SDK) |
+| 🌍 Backend | Node.js, Express |
+| 🗄️ Banco de Dados | PostgreSQL |
+| 🧰 Infraestrutura | Docker, Docker Compose |
+| 🎨 Frontend | HTML5, CSS3, Bootstrap, JavaScript, TypeScript |
+
+---
+
+## 📂 Estrutura de Diretórios
+
+```text
+brinco-boi/
+│
+├── 📘 docs/
+│   ├── resumo_projeto.md
+│   ├── arquitetura_sistema.md
+│   └── diagramas/
+│       ├── fluxogramas/
+│       │   ├── fluxo_principal.png
+│       │   ├── cadastro_bovino.png
+│       │   └── fluxo_leitor_rfid.png
+│       ├── esquematicos/
+│       │   ├── circuito_soc_rc522.png
+│       │   └── pinout_soc.png
+│       └── telas/
+│           ├── login.png
+│           └── relatorios.png
+│
+├── ⚙️ hardware/
+│   ├── esquemas/
+│   │   ├── rc522_soc.fzz
+│   │   └── alimentacao_3v3.png
+│   └── firmware/
+│       ├── src/
+│       │   ├── main.c
+│       │   ├── rfid_rc522.c
+│       │   ├── rfid_rc522.h
+│       │   ├── wifi.c
+│       │   └── wifi.h
+│       ├── CMakeLists.txt
+│       └── README.md
+│
+├── 🌐 webapp/
+│   ├── frontend/
+│   │   ├── index.html
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   ├── js/
+│   │   │   └── app.js
+│   │   └── img/
+│   ├── backend/
+│   │   ├── src/
+│   │   │   ├── server.js
+│   │   │   ├── routes/
+│   │   │   ├── controllers/
+│   │   │   └── models/
+│   │   ├── package.json
+│   │   └── README.md
+│   └── docker-compose.yml
+│
+├── 🗄️ database/
+│   ├── schema.sql
+│   └── seeds.sql
+│
+└── 🧪 tests/
+    ├── hardware_tests/
+    │   └── test_rc522_spi.md
+    └── web_tests/
+        └── api_endpoints.http
 
