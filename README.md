@@ -26,7 +26,7 @@ O objetivo é tornar o manejo do rebanho mais eficiente, seguro e inteligente �
 
 O sistema combina **componentes de hardware** e **software** para criar uma solução completa:
 
-- 🧩 **Hardware:** leitor RFID, microcontrolador ESP32 (ou outro SoC equivalente) e sensores auxiliares.  
+- 🧩 **Hardware:** leitor RFID, SoC e sensores auxiliares.  
 - 💻 **Software embarcado:** desenvolvido em **C**, responsável pela leitura e transmissão dos dados RFID.  
 - 🌐 **Backend Web:** implementado com **Node.js + Express + PostgreSQL**, containerizado via **Docker**.  
 - 🖥️ **Frontend:** interface web responsiva em **HTML5, CSS, Bootstrap e JavaScript/TypeScript**.  
