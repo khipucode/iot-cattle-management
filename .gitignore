@@ -1,0 +1,4 @@
+# Ignorar arquivos de banco de dados e dados gerados
+Fazenda/dados/grafana/grafana.db
+Fazenda/dados/
+*.db

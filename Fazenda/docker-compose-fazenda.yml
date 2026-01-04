@@ -1,0 +1,27 @@
+services:
+  mariadb:
+    image: mariadb:12.2.1-ubi10-rc
+    container_name: fazenda-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: senhaForte
+      MYSQL_DATABASE: bovinos
+      MYSQL_USER: fazendeiro
+      MYSQL_PASSWORD: senhaFazenda
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dados/mariadb:/var/lib/mysql
+
+  grafana:
+    image: grafana/grafana:12.1-ubuntu
+    container_name: fazenda-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Editor
+    volumes:
+      - ./dados/grafana:/var/lib/grafana
+

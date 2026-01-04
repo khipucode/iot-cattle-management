@@ -1,0 +1,65 @@
+comando para se entrar no bancoatravés do docker
+
+docker exec -it fazenda-db mariadb -u fazendeiro -p bovinos
+após o comando, irá pedir uma senha
+senha: senhaFazenda
+
+criando a tabela eventos
+
+CREATE TABLE eventos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    bovino_id INT NOT NULL,
+    tipo_evento VARCHAR(100) NOT NULL,   -- Ex: "bebeu água", "comeu no cocho"
+    data_evento DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    observacao TEXT,                     -- campo opcional para detalhes extras
+    FOREIGN KEY (bovino_id) REFERENCES bovinos(id)
+);
+
+Inserindo dados na tabela eventos
+
+INSERT INTO eventos (bovino_id, tipo_evento, observacao)
+VALUES (1, 'bebeu água', 'sensor RFID detectou no bebedouro');
+
+INSERT INTO eventos (bovino_id, tipo_evento)
+VALUES (1, 'foi ao pasto');
+
+fazendo um join para cruzar informações da primeira tabela com a segunda
+
+SELECT b.id, b.brinco, b.raca, e.tipo_evento, e.data_evento, e.observacao
+FROM bovinos b
+JOIN eventos e ON b.id = e.bovino_id
+WHERE b.id = 1;
+
+codigo para consulta que mostra o último evento por bovino e todos os anteriores 
+
+SELECT b.id, b.brinco, b.raca, e.tipo_evento, e.data_evento,
+       CASE 
+         WHEN e.data_evento = (
+             SELECT MAX(e2.data_evento)
+             FROM eventos e2
+             WHERE e2.bovino_id = b.id
+         ) THEN 'Último'
+         ELSE 'Anterior'
+       END AS status_evento
+FROM bovinos b
+JOIN eventos e ON b.id = e.bovino_id
+ORDER BY b.id, e.data_evento;
+
+
+também podemos agrupar por grupos
+
+SELECT b.id, b.brinco, b.raca, MAX(e.data_evento) AS ultimo_evento
+FROM bovinos b
+JOIN eventos e ON b.id = e.bovino_id
+GROUP BY b.id, b.brinco, b.raca;
+
+
+ou listar cada boi em ordem cronologica
+
+SELECT b.id, b.brinco, b.raca, e.tipo_evento, e.data_evento, e.observacao
+FROM bovinos b
+JOIN eventos e ON b.id = e.bovino_id
+ORDER BY b.id, e.data_evento;
+
+
+
