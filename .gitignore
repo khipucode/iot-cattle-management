@@ -1,4 +1,22 @@
+<<<<<<< HEAD
 # Ignorar arquivos de banco de dados e dados gerados
 Fazenda/dados/grafana/grafana.db
 Fazenda/dados/
 *.db
+
+# Ignorar dados persistentes e temporários
+dados/
+eventos
+*.log
+*.tmp
+*.out
+
+# Ignorar configs locais
+grafana.ini
+teste_Pub_Sub_Mosquitto.txt
+
+# Ignorar caches e IDEs
+__pycache__/
+.vscode/
+.idea/
+
