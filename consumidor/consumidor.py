@@ -1,8 +1,10 @@
 import os
 import json
 import time
+import threading
 import paho.mqtt.client as mqtt
 import mysql.connector
+from flask import Flask
 
 # Configurações do banco
 DB_HOST = os.getenv("DB_HOST", "fazenda-db")
@@ -26,6 +28,7 @@ def connect_db():
                 database=DB_NAME
             )
             conn.autocommit = True
+            print("Conectado ao MariaDB")
             return conn
         except Exception as e:
             print("Aguardando MariaDB...", e)
@@ -33,6 +36,14 @@ def connect_db():
 
 conn = connect_db()
 cursor = conn.cursor()
+
+def ensure_connection():
+    global conn, cursor
+    try:
+        conn.ping(reconnect=True, attempts=3, delay=2)
+    except:
+        conn = connect_db()
+        cursor = conn.cursor()
 
 # Callback quando conecta ao broker
 def on_connect(client, userdata, flags, rc):
@@ -46,7 +57,11 @@ def on_message(client, userdata, msg):
     try:
         data = json.loads(payload_str)
 
-        # garante valor padrão para observação
+        # valida dados obrigatórios
+        if not data.get("id") or not data.get("evento"):
+            print("Mensagem inválida:", data)
+            return
+
         obs = data.get("obs", "sem observação")
 
         sql = """
@@ -56,24 +71,41 @@ def on_message(client, userdata, msg):
         valores = (
             data.get("id"),       # id do bovino
             data.get("evento"),   # tipo de evento
-            obs,                  # observação (ou "sem observação")
+            obs,                  # observação
             json.dumps(data)      # payload bruto
         )
 
+        ensure_connection()
         cursor.execute(sql, valores)
         print("Evento inserido:", valores)
 
     except Exception as e:
         print("Erro ao processar mensagem:", e)
 
-# Função principal
-def main():
+# Função principal do consumidor
+def mqtt_loop():
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
     client.connect(MQTT_HOST, MQTT_PORT, 60)
     client.loop_forever()
 
+# Flask app para healthcheck
+app = Flask(__name__)
+
+@app.route("/health")
+def health():
+    try:
+        ensure_connection()
+        return "ok", 200
+    except Exception as e:
+        return f"erro: {e}", 500
+
 if __name__ == "__main__":
-    main()
+    # roda o loop MQTT em thread separada
+    t = threading.Thread(target=mqtt_loop, daemon=True)
+    t.start()
+
+    # inicia servidor Flask para healthcheck
+    app.run(host="0.0.0.0", port=8000)
 

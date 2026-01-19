@@ -72,36 +72,32 @@ O sistema combina **componentes de hardware** e **software** para criar uma solu
 ```text
 brinco-boi/
 │
-├── 📘 docs/
-│   ├── resumo_projeto.md
-│   ├── arquitetura_sistema.md
-│   └── diagramas/
-│
-├── ⚙️ hardware/
-│   ├── esquemas/
-│   └── firmware/
-│       ├── src/
-│       ├── CMakeLists.txt
-│       └── README.md
-│
-├── 🌐 webapp/
-│   ├── frontend/
-│   ├── backend/
-│   └── docker-compose.yml
-│
-├── 🗄️ database/
-│   ├── schema.sql
-│   └── seeds.sql
-│
-├── 🧪 tests/
-│   ├── hardware_tests/
-│   └── web_tests/
-│
-└── 🐄 Fazenda/
-    ├── docker-compose.yml
-    └── dados/
-        ├── mariadb/
-        └── grafana/
+├── consumidor
+│   ├── consumidor.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── dados
+│   ├── grafana
+│   ├── mariadb
+│   └── mosquitto
+├── docker-compose-fazenda.yml
+├── docs
+│   ├── arquitetura_sistema.md
+│   ├── diagramas
+│   ├── funcionamento_leitor.png
+│   └── guia_docker.md
+├── eventos
+├── Fazenda
+│   ├── dados
+│   ├── eventos
+│   └── grafana.ini
+├── grafana.ini
+├── hardware
+│   └── README.md
+├── README.md
+├── teste_Pub_Sub_Mosquitto.txt
+└── webapp
+    └── backend
 ```
 
 ---
@@ -118,11 +114,11 @@ brinco-boi/
    ```
 3. Suba os containers:
    ```bash
-   docker compose up -d --build
+   docker compose -f docker-compose-fazenda.yml up -d --build
    ```
 4. Para parar os containers:
    ```bash
-   docker compose down
+   docker compose -f docker-compose-fazenda.yml down
    ```
 
 ---

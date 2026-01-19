@@ -14,6 +14,11 @@ services:
       - ./dados/mariadb:/var/lib/mysql
     networks:
       - fazenda-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "fazendeiro", "-psenhaFazenda"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   grafana:
     image: grafana/grafana:12.1-ubuntu
@@ -28,6 +33,11 @@ services:
       - ./dados/grafana:/var/lib/grafana
     networks:
       - fazenda-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   mosquitto:
     image: eclipse-mosquitto
@@ -42,14 +52,21 @@ services:
     networks:
       - fazenda-net
     command: mosquitto -c /mosquitto/config/mosquitto.conf
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "1883"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   consumidor:
     build: ./consumidor
     container_name: fazenda-consumidor
     restart: always
     depends_on:
-      - mariadb
-      - mosquitto
+      mariadb:
+        condition: service_healthy
+      mosquitto:
+        condition: service_healthy
     environment:
       - DB_HOST=fazenda-db
       - DB_USER=fazendeiro
@@ -60,6 +77,11 @@ services:
       - MQTT_TOPIC=fazenda/sensores/#
     networks:
       - fazenda-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 networks:
   fazenda-net:
