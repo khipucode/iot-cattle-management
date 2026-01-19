@@ -118,7 +118,7 @@ brinco-boi/
    ```
 3. Suba os containers:
    ```bash
-   docker compose up -d
+   docker compose up -d --build
    ```
 4. Para parar os containers:
    ```bash
