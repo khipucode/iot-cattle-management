@@ -1,0 +1,81 @@
+# 1. Na raiz do projeto, suba todos os serviços
+docker compose -f docker-compose-fazenda.yml up -d --build
+
+# 2. Execute o gerador de dados
+cd Pasta_Testes_Populate
+python populate_data.py
+
+# 3. Ou execute via Docker (recomendado)
+docker compose -f ../docker-compose-fazenda.yml up -d gerador-dados
+
+# 4. Verifique os logs
+docker compose -f ../docker-compose-fazenda.yml logs -f gerador-dados
+
+# 5. Teste manualmente via MQTT
+mosquitto_sub -h localhost -t "fazenda/sensores/#" -v
+
+# 6. Para Derrubar e remover Containeres:  Para e remove containers, redes, mas mantém os volumes (seus dados ficam seguros).
+docker compose -f docker-compose-fazenda.yml down
+
+# 7. Para Derrubar e Remover TUDO: Cuidado  Isso apaga TODOS os dados do MariaDB, Grafana e Mosquitto! Só use se quiser começar do zero.APAGA Tudo incluindo volumes(USE APENAS SE SOUBER O QUE ESTA FAZENDO)
+docker compose -f docker-compose-fazenda.yml down -v
+
+# 8. Ver status dos serviços
+docker compose -f docker-compose-fazenda.yml ps
+
+# 9. Ver logs de todos os serviços.
+docker compose -f docker-compose-fazenda.yml logs -f
+
+# 10. Ver logs de um serviço específico
+docker compose -f docker-compose-fazenda.yml logs -f mariadb
+docker compose -f docker-compose-fazenda.yml logs -f gerador-dados
+
+# 11. Parar serviços sem remover
+docker compose -f docker-compose-fazenda.yml stop
+
+# 12. Iniciar serviços já parados
+docker compose -f docker-compose-fazenda.yml start
+
+# 13. Recriar um serviço específico (útil após alterar Dockerfile)
+docker compose -f docker-compose-fazenda.yml up -d --build --force-recreate consumidor
+
+Fluxo de trabalho sugerido.
+
+# 1. PRIMEIRA VEZ: Subir infraestrutura base
+docker compose -f docker-compose-fazenda.yml up -d mariadb grafana mosquitto
+
+# 2. Esperar serviços ficarem saudáveis (30-60 segundos)
+sleep 45
+
+# 3. Subir consumidor
+docker compose -f docker-compose-fazenda.yml up -d consumidor
+
+# 4. Quando precisar de dados de teste, subir o gerador
+docker compose -f docker-compose-fazenda.yml up -d gerador-dados
+
+# 5. Parar o gerador quando não precisar mais
+docker compose -f docker-compose-fazenda.yml stop gerador-dados
+
+# 6. Ao final do dia/trabalho, derrubar TUDO (mantendo dados)
+docker compose -f docker-compose-fazenda.yml down
+
+# 7. No próximo dia, só subir novamente
+docker compose -f docker-compose-fazenda.yml up -d
+
+Crie um alias no seu terminal para facilitar:
+
+# Adicione ao ~/.bashrc ou ~/.zshrc
+alias fazenda-up="docker compose -f docker-compose-fazenda.yml up -d --build"
+alias fazenda-down="docker compose -f docker-compose-fazenda.yml down"
+alias fazenda-logs="docker compose -f docker-compose-fazenda.yml logs -f"
+alias fazenda-ps="docker compose -f docker-compose-fazenda.yml ps"
+
+# Recarrege o terminal
+source ~/.bashrc
+
+Uso simplificado:
+
+fazenda-up      # Sobe tudo
+fazenda-ps      # Ver status
+fazenda-logs    # Ver logs
+fazenda-down    # Derruba tudo (mantendo dados)

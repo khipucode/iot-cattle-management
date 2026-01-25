@@ -56,32 +56,49 @@ def on_message(client, userdata, msg):
     payload_str = msg.payload.decode("utf-8", errors="ignore")
     try:
         data = json.loads(payload_str)
+        print(f"Recebido: {data}")  # Debug
 
-        # valida dados obrigatórios
-        if not data.get("id") or not data.get("evento"):
-            print("Mensagem inválida:", data)
+        # Tenta diferentes formatos de campos
+        # Formato 1: campos novos do gerador
+        bovino_id = data.get("bovino_id") or data.get("id")
+        tipo_evento = data.get("tipo_evento") or data.get("evento")
+        
+        # Formato 2: campo antigo (se ainda usar)
+        if not bovino_id or not tipo_evento:
+            print("Mensagem inválida - campos obrigatórios faltando:", data)
             return
 
-        obs = data.get("obs", "sem observação")
+        # Cria observação a partir dos campos extras
+        obs_parts = []
+        if data.get("local"):
+            obs_parts.append(f"Local: {data['local']}")
+        if data.get("temperatura"):
+            obs_parts.append(f"Temp: {data['temperatura']}°C")
+        if data.get("peso_kg"):
+            obs_parts.append(f"Peso: {data['peso_kg']}kg")
+        
+        obs = data.get("obs", ", ".join(obs_parts)) if obs_parts else "sem observação"
 
+        # Usa data_evento do JSON ou NOW() se não tiver
+        data_evento = data.get("data_evento")
+        
         sql = """
             INSERT INTO eventos (bovino_id, tipo_evento, data_evento, observacao, payload_json)
-            VALUES (%s, %s, NOW(), %s, %s)
+            VALUES (%s, %s, %s, %s, %s)
         """
-        valores = (
-            data.get("id"),       # id do bovino
-            data.get("evento"),   # tipo de evento
-            obs,                  # observação
-            json.dumps(data)      # payload bruto
-        )
-
+        
+        if data_evento:
+            valores = (bovino_id, tipo_evento, data_evento, obs, json.dumps(data))
+        else:
+            valores = (bovino_id, tipo_evento, "NOW()", obs, json.dumps(data))
+        
         ensure_connection()
         cursor.execute(sql, valores)
-        print("Evento inserido:", valores)
+        print(f"✅ Evento inserido: Boi {bovino_id} - {tipo_evento}")
 
     except Exception as e:
-        print("Erro ao processar mensagem:", e)
-
+        print(f"❌ Erro ao processar mensagem: {e}")
+        print(f"Dados: {data if 'data' in locals() else 'n/a'}")
 # Função principal do consumidor
 def mqtt_loop():
     client = mqtt.Client()

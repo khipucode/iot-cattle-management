@@ -2,16 +2,18 @@ services:
   mariadb:
     image: mariadb:12.2.1-ubi10-rc
     container_name: fazenda-db
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: senhaForte
       MYSQL_DATABASE: bovinos
       MYSQL_USER: fazendeiro
       MYSQL_PASSWORD: senhaFazenda
+      MYSQL_INITDB_SKIP_TZINFO: 1
     ports:
       - "3306:3306"
     volumes:
       - ./dados/mariadb:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d
     networks:
       - fazenda-net
     healthcheck:
@@ -19,20 +21,26 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+      start_period: 40s
 
   grafana:
     image: grafana/grafana:12.1-ubuntu
     container_name: fazenda-grafana
-    restart: always
+    restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Editor
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
     volumes:
       - ./dados/grafana:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
     networks:
       - fazenda-net
+    depends_on:
+      mariadb:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/login"]
       interval: 30s
@@ -42,16 +50,16 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: fazenda-mosquitto
-    restart: always
+    restart: unless-stopped
     ports:
       - "1883:1883"
+      - "9001:9001"
     volumes:
       - ./dados/mosquitto/config:/mosquitto/config
       - ./dados/mosquitto/data:/mosquitto/data
       - ./dados/mosquitto/log:/mosquitto/log
     networks:
       - fazenda-net
-    command: mosquitto -c /mosquitto/config/mosquitto.conf
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "1883"]
       interval: 30s
@@ -59,9 +67,11 @@ services:
       retries: 5
 
   consumidor:
-    build: ./consumidor
+    build: 
+      context: ./consumidor
+      dockerfile: Dockerfile
     container_name: fazenda-consumidor
-    restart: always
+    restart: unless-stopped
     depends_on:
       mariadb:
         condition: service_healthy
@@ -75,6 +85,10 @@ services:
       - MQTT_HOST=fazenda-mosquitto
       - MQTT_PORT=1883
       - MQTT_TOPIC=fazenda/sensores/#
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./consumidor:/app  
+      - ./consumidor/logs:/app/logs
     networks:
       - fazenda-net
     healthcheck:
@@ -83,7 +97,25 @@ services:
       timeout: 10s
       retries: 5
 
+  gerador-dados:  # ← SEÇÃO CORRIGIDA
+    build:
+      context: ./Pasta_Testes_Populate
+      dockerfile: Dockerfile
+    container_name: fazenda-gerador
+    restart: unless-stopped  # ← APENAS ISTO, sem comando shell!
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    environment:
+      - MQTT_HOST=172.19.0.3  # ← Use o IP que descobrimos!
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=fazenda/sensores/evento
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./Pasta_Testes_Populate:/app
+    networks:
+      - fazenda-net
+
 networks:
   fazenda-net:
     driver: bridge
-
