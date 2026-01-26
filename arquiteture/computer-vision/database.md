@@ -1,5 +1,26 @@
 # 🐄 Subsistema de Visão Computacional – Plataforma de Monitoramento de Gado
 
+## 📦 Resumo das Variáveis – Subsistema de Visão Computacional (MQTT / Banco de Dados)
+
+| Variável | Tipo sugerido (MariaDB) | Obrigatória | Descrição |
+|----------|--------------------------|-------------|-----------|
+| `site_id` | VARCHAR(64) | ✅ | Identificador único do local monitorado (curral, pasto, fazenda, etc.) |
+| `site_name` | VARCHAR(128) | ✅ | Nome legível do local |
+| `camera_id` | VARCHAR(64) | ❌ | Identificador da câmera IP |
+| `timestamp` | DATETIME | ✅ | Data e hora da medição (UTC, ISO 8601) |
+| `cattle_count` | INT | ✅ | Quantidade de bois detectados na ROI |
+| `anomaly_detected` | BOOLEAN | ✅ | Indica se foi detectada alguma anomalia (pessoa, veículo, etc.) |
+| `anomaly_classes` | VARCHAR(255) | ❌ | Classes detectadas como anomalia (ex: `person,vehicle`) |
+| `boundary_violation` | BOOLEAN | ✅ | Indica se houve violação de limite geográfico |
+| `cattle_outside_count` | INT | ❌ | Quantidade de bois fora da área permitida |
+| `activity_level` | ENUM('low','normal','high') | ❌ | Nível de atividade/movimentação do rebanho |
+| `confidence_avg` | FLOAT | ❌ | Confiança média das detecções |
+| `frame_window_s` | INT | ❌ | Janela de agregação das medições (em segundos) |
+| `model_version` | VARCHAR(64) | ❌ | Versão do modelo de visão computacional utilizado |
+
+---
+
+
 ## 🎯 Objetivo
 
 Projetar e implementar um **subsistema de visão computacional** capaz de extrair métricas e eventos visuais de ambientes pecuários (pasto, curral, área de alimentação) e enviá-los em **quase tempo real** para uma plataforma IoT central utilizando **MQTT**, onde os dados serão armazenados em **MariaDB** e visualizados em **Grafana**.
@@ -118,25 +139,6 @@ Todas as métricas são enviadas em **uma única mensagem** para **um único tó
 
 ### Tópico
 
-# 📦 Resumo das Variáveis – Subsistema de Visão Computacional (MQTT / Banco de Dados)
-
-| Variável | Tipo sugerido (MariaDB) | Obrigatória | Descrição |
-|----------|--------------------------|-------------|-----------|
-| `site_id` | VARCHAR(64) | ✅ | Identificador único do local monitorado (curral, pasto, fazenda, etc.) |
-| `site_name` | VARCHAR(128) | ✅ | Nome legível do local |
-| `camera_id` | VARCHAR(64) | ❌ | Identificador da câmera IP |
-| `timestamp` | DATETIME | ✅ | Data e hora da medição (UTC, ISO 8601) |
-| `cattle_count` | INT | ✅ | Quantidade de bois detectados na ROI |
-| `anomaly_detected` | BOOLEAN | ✅ | Indica se foi detectada alguma anomalia (pessoa, veículo, etc.) |
-| `anomaly_classes` | VARCHAR(255) | ❌ | Classes detectadas como anomalia (ex: `person,vehicle`) |
-| `boundary_violation` | BOOLEAN | ✅ | Indica se houve violação de limite geográfico |
-| `cattle_outside_count` | INT | ❌ | Quantidade de bois fora da área permitida |
-| `activity_level` | ENUM('low','normal','high') | ❌ | Nível de atividade/movimentação do rebanho |
-| `confidence_avg` | FLOAT | ❌ | Confiança média das detecções |
-| `frame_window_s` | INT | ❌ | Janela de agregação das medições (em segundos) |
-| `model_version` | VARCHAR(64) | ❌ | Versão do modelo de visão computacional utilizado |
-
----
 
 ## 🧠 Observações de Projeto
 
