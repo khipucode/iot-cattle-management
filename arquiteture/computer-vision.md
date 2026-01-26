@@ -9,7 +9,9 @@ Projetar e implementar um **subsistema de visão computacional** capaz de extrai
 ## 🧱 Visão Geral da Arquitetura
 
 - 📷 **Câmera IP (RTSP/ONVIF)** – fornece o fluxo de vídeo ao vivo  
-- 🧠 **NVIDIA Jetson (Edge AI)** – executa detecção e análises em tempo real  
+- 🧠 **NVIDIA Jetson (Edge AI)** – executa detecção e análises em tempo real
+
+## Software no Gateway
 - 📡 **Broker MQTT (Mosquitto)** – transporte das mensagens  
 - 🗄️ **MariaDB** – persistência dos dados  
 - 📊 **Grafana** – dashboards e alertas
