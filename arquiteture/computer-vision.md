@@ -1,113 +1,118 @@
-# 🐄 Computer Vision Subsystem – Cattle Monitoring Platform
+# 🐄 Subsistema de Visão Computacional – Plataforma de Monitoramento de Gado
 
-## 🎯 Objective
-Design and implement a **computer vision subsystem** capable of extracting visual metrics and events from cattle environments (pasture, corral, feeding area) and sending them in near real-time to a **central IoT platform** using **MQTT**, where the data will be stored in **MariaDB** and visualized in **Grafana**.
+## 🎯 Objetivo
 
----
-
-## 🧱 System Architecture Overview
-
-- 📷 **IP Camera (RTSP/ONVIF)** – provides live video stream  
-- 🧠 **NVIDIA Jetson (Edge AI)** – performs real-time detection and analytics  
-- 📡 **MQTT Broker (Mosquitto)** – message transport  
-- 🗄️ **MariaDB** – data persistence  
-- 📊 **Grafana** – dashboards and alerts
+Projetar e implementar um **subsistema de visão computacional** capaz de extrair métricas e eventos visuais de ambientes pecuários (pasto, curral, área de alimentação) e enviá-los em **quase tempo real** para uma plataforma IoT central utilizando **MQTT**, onde os dados serão armazenados em **MariaDB** e visualizados em **Grafana**.
 
 ---
 
-## ⚙️ Subsystem Functions
+## 🧱 Visão Geral da Arquitetura
 
-### 1️⃣ Cattle Counting (ROI-based)
-- Count cattle inside a defined **Region of Interest (ROI)**.
-- Useful for monitoring herd size, feeding behavior, and occupancy.
-
-**Output:**  
-`cattle_count` (integer)
-
----
-
-### 2️⃣ Anomaly / Intrusion Detection
-Detect unexpected objects in the scene:
-
-- 👤 Person  
-- 🚗 Vehicle  
-- 🐕 Dog or other animals  
-- ⚙️ Configurable object classes
-
-**Output:**  
-`anomaly_detected` (boolean)  
-Optional: `anomaly_classes` (list/string)
+- 📷 **Câmera IP (RTSP/ONVIF)** – fornece o fluxo de vídeo ao vivo  
+- 🧠 **NVIDIA Jetson (Edge AI)** – executa detecção e análises em tempo real  
+- 📡 **Broker MQTT (Mosquitto)** – transporte das mensagens  
+- 🗄️ **MariaDB** – persistência dos dados  
+- 📊 **Grafana** – dashboards e alertas
 
 ---
 
-### 3️⃣ Boundary / Geofence Violation
-Detect if cattle cross predefined spatial boundaries:
+## ⚙️ Funcionalidades do Subsistema
 
-- Leaving pasture area  
-- Entering restricted zones  
-- Crossing safety lines
+### 1️⃣ Contagem de bois (baseada em ROI)
 
-**Output:**  
-`boundary_violation` (boolean)  
-Optional: `cattle_outside_count` (integer)
+- Contar os bois dentro de uma **Região de Interesse (ROI)** previamente definida.
+- Útil para monitorar tamanho do rebanho, comportamento alimentar e ocupação de áreas.
+
+**Saída:**  
+`cattle_count` (inteiro)
 
 ---
 
-### 4️⃣ Motion Pattern Analysis (Optional – Future)
-Detect abnormal activity:
+### 2️⃣ Detecção de anomalias / intrusão
 
-- 🟢 Low movement  
+Detectar objetos inesperados no cenário, como:
+
+- 👤 Pessoas  
+- 🚗 Veículos  
+- 🐕 Outros animais  
+- ⚙️ Classes configuráveis
+
+**Saída:**  
+`anomaly_detected` (booleano)  
+Opcional: `anomaly_classes` (lista/string)
+
+---
+
+### 3️⃣ Violação de limites (geofence)
+
+Detectar se bois ultrapassam limites espaciais pré-definidos:
+
+- Saída do pasto  
+- Entrada em áreas restritas  
+- Cruzamento de linhas de segurança
+
+**Saída:**  
+`boundary_violation` (booleano)  
+Opcional: `cattle_outside_count` (inteiro)
+
+---
+
+### 4️⃣ Análise de padrão de movimento (opcional – futuro)
+
+Detecção de atividade anormal do rebanho:
+
+- 🟢 Baixa movimentação  
 - 🟡 Normal  
-- 🔴 High agitation or stampede
+- 🔴 Agitação excessiva ou corrida
 
-**Optional Output:**  
+**Saída opcional:**  
 `activity_level` (`low | normal | high`)
 
 ---
 
-## 🧠 Edge Computing Strategy
+## 🧠 Estratégia de Computação em Borda (Edge Computing)
 
-All processing is performed **locally on the Jetson device**:
+Todo o processamento é realizado **localmente no Jetson**, incluindo:
 
-- YOLO-based object detection  
-- Spatial filtering (ROI + geofence)  
-- Event logic (anomaly + boundary)  
-- Temporal aggregation (e.g., every 5 seconds)
+- Detecção de objetos com YOLO  
+- Filtragem espacial (ROI e limites)  
+- Lógica de eventos (anomalia e violação)  
+- Agregação temporal (ex.: a cada 5 segundos)
 
-✅ Benefits:
+### Benefícios:
 
-- Low latency  
-- Reduced bandwidth usage  
-- Works offline  
-- Scalable
+- ✅ Baixa latência  
+- ✅ Menor uso de banda  
+- ✅ Operação offline  
+- ✅ Alta escalabilidade
 
-> A single unified service/script is recommended for detection + analytics + MQTT publishing.
+> Recomenda-se utilizar **um único serviço/script unificado** para detecção, análise e publicação via MQTT.
 
 ---
 
-## 📦 Data Model (MQTT Payload – JSON)
+## 📦 Modelo de Dados (Payload MQTT em JSON)
 
-All metrics are sent in **one message** to a **single topic**.
+Todas as métricas são enviadas em **uma única mensagem** para **um único tópico**.
 
-### Required Fields
+### Campos obrigatórios
 
-- `site_id` – Unique location identifier  
-- `site_name` – Human-readable location name  
-- `cattle_count` – Number of cattle detected  
-- `anomaly_detected` – true / false  
-- `boundary_violation` – true / false  
-- `timestamp` – ISO 8601 UTC format  
+- `site_id` – identificador único do local  
+- `site_name` – nome do local  
+- `cattle_count` – número de bois detectados  
+- `anomaly_detected` – verdadeiro/falso  
+- `boundary_violation` – verdadeiro/falso  
+- `timestamp` – data e hora em formato ISO 8601 (UTC)
 
-### Recommended Metadata
+### Metadados recomendados
 
 - `camera_id`  
-- `frame_window_s` (aggregation window)  
+- `frame_window_s` – janela de agregação  
 - `model_version`  
 - `confidence_avg`
 
 ---
 
-## 📡 MQTT Communication
+## 📡 Comunicação MQTT
 
-### Topic
+### Tópico
 
