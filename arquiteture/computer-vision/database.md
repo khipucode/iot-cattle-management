@@ -2,6 +2,8 @@
 
 ## 📦 Resumo das Variáveis – Subsistema de Visão Computacional (MQTT / Banco de Dados)
 
+## Tópico: computer_vision
+
 | Variável | Tipo sugerido (MariaDB) | Obrigatória | Descrição |
 |----------|--------------------------|-------------|-----------|
 | `site_id` | VARCHAR(64) | ✅ | Identificador único do local monitorado (curral, pasto, fazenda, etc.) |
