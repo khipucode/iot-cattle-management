@@ -1,0 +1,169 @@
+RFID Handheld Stick - Menu Tree (MQTT Event Sender)
+│
+├── 0) Core Event Envelope (used by ALL actions)
+│   ├── device_id
+│   ├── operator_id
+│   ├── cattle_tag_id          (RFID)
+│   ├── action_type            (string enum)
+│   ├── action_category        (passive | active | telemetry | system)
+│   ├── timestamp              (ISO 8601)
+│   ├── location_id            (optional)
+│   ├── notes                  (optional)
+│   └── metadata               (object, action-specific)
+│
+├── 1) Passive Events (scan → auto-send)
+│   │
+│   ├── 1.1 Watering
+│   │   ├── action_type: water_drink
+│   │   ├── mqtt_topic: cattle/event/water
+│   │   └── metadata
+│   │       ├── water_point_id
+│   │       ├── dwell_time_s              (optional)
+│   │       └── event_count               (optional)
+│   │
+│   ├── 1.2 Corral Gate (Entry/Exit)
+│   │   ├── action_type: corral_gate
+│   │   ├── mqtt_topic: cattle/event/corral
+│   │   └── metadata
+│   │       ├── gate_id
+│   │       └── direction                (in | out)
+│   │
+│   ├── 1.3 Pasture / Paddock Zone
+│   │   ├── action_type: pasture_zone
+│   │   ├── mqtt_topic: cattle/event/pasture
+│   │   └── metadata
+│   │       ├── paddock_id
+│   │       └── zone_event               (enter | exit | presence)
+│   │
+│   └── 1.4 Auto Weighing (if the stick triggers a scale/reader)
+│       ├── action_type: auto_weigh
+│       ├── mqtt_topic: cattle/event/weight
+│       └── metadata
+│           ├── scale_id
+│           ├── weight_kg
+│           └── weight_quality           (ok | unstable | error)
+│
+├── 2) Active Actions (operator selects → press button → scan → send)
+│   │
+│   ├── 2.1 Health / Sanitary
+│   │   │
+│   │   ├── Vaccination
+│   │   │   ├── action_type: vaccination
+│   │   │   ├── mqtt_topic: cattle/action/health/vaccination
+│   │   │   └── metadata
+│   │   │       ├── vaccine_type         (fmd | brucellosis | clostridiosis | other)
+│   │   │       ├── dose_ml              (optional)
+│   │   │       ├── batch_id             (optional)
+│   │   │       └── next_due_date        (optional)
+│   │   │
+│   │   ├── Parasite Control
+│   │   │   ├── action_type: parasite_control
+│   │   │   ├── mqtt_topic: cattle/action/health/parasite
+│   │   │   └── metadata
+│   │   │       ├── method              (drenching | pour_on | injectable | other)
+│   │   │       ├── product_name        (optional)
+│   │   │       └── dose_ml             (optional)
+│   │   │
+│   │   └── Treatment / Injury
+│   │       ├── action_type: treatment
+│   │       ├── mqtt_topic: cattle/action/health/treatment
+│   │       └── metadata
+│   │           ├── treatment_type       (antibiotic | anti_inflammatory | wound_care | other)
+│   │           ├── dose_ml              (optional)
+│   │           ├── withdrawal_days      (optional)
+│   │           └── injury_report        (text, optional)
+│   │
+│   ├── 2.2 Nutrition / Feeding
+│   │   ├── action_type: feeding
+│   │   ├── mqtt_topic: cattle/action/nutrition/feeding
+│   │   └── metadata
+│   │       ├── feed_type               (mineral_salt | protein_mix | ration | other)
+│   │       ├── amount_kg               (optional)
+│   │       └── body_condition_score    (1..5, optional)
+│   │
+│   ├── 2.3 Reproduction
+│   │   ├── Heat / Estrus
+│   │   │   ├── action_type: heat_detection
+│   │   │   ├── mqtt_topic: cattle/action/repro/heat
+│   │   │   └── metadata
+│   │   │       ├── heat_signs_score     (optional)
+│   │   │       └── observer_confidence  (low | medium | high)
+│   │   │
+│   │   ├── Insemination
+│   │   │   ├── action_type: insemination
+│   │   │   ├── mqtt_topic: cattle/action/repro/insemination
+│   │   │   └── metadata
+│   │   │       ├── semen_batch_id       (optional)
+│   │   │       └── bull_id              (optional)
+│   │   │
+│   │   ├── Pregnancy Check
+│   │   │   ├── action_type: pregnancy_check
+│   │   │   ├── mqtt_topic: cattle/action/repro/pregnancy
+│   │   │   └── metadata
+│   │   │       ├── result               (positive | negative)
+│   │   │       └── method               (palpation | ultrasound | other)
+│   │   │
+│   │   └── Weaning
+│   │       ├── action_type: weaning
+│   │       ├── mqtt_topic: cattle/action/repro/weaning
+│   │       └── metadata
+│   │           ├── calf_tag_id           (optional)
+│   │           └── weaning_reason        (age | health | management | other)
+│   │
+│   └── 2.4 Inventory & Logistics
+│       ├── Lot Assignment
+│       │   ├── action_type: lot_assignment
+│       │   ├── mqtt_topic: cattle/action/inventory/lot
+│       │   └── metadata
+│       │       ├── from_lot_id           (optional)
+│       │       └── to_lot_id
+│       │
+│       ├── Manual Weight
+│       │   ├── action_type: manual_weight
+│       │   ├── mqtt_topic: cattle/action/inventory/manual_weight
+│       │   └── metadata
+│       │       ├── weight_kg
+│       │       └── scale_id              (optional)
+│       │
+│       └── Culling / Sell Flag
+│           ├── action_type: culling_flag
+│           ├── mqtt_topic: cattle/action/inventory/culling
+│           └── metadata
+│               ├── reason               (low_bcs | age | illness | behavior | other)
+│               └── priority             (low | medium | high)
+│
+├── 3) Telemetry (periodic publish, independent of RFID scans)
+│   ├── action_type: telemetry
+│   ├── mqtt_topic: stick/telemetry/environment
+│   └── metadata
+│       ├── temperature_c
+│       ├── humidity_percent
+│       ├── fire_detected              (bool)
+│       ├── gas_ppm                    (optional)
+│       ├── battery_percent
+│       ├── rssi_dbm                   (optional)
+│       └── sample_interval_s
+│
+└── 4) System / Device Menu
+    ├── Sync
+    │   ├── action_type: sync_data
+    │   └── mqtt_topic: stick/system/sync
+    │
+    ├── Battery / Health
+    │   ├── action_type: battery_status
+    │   └── mqtt_topic: stick/system/battery
+    │
+    ├── RFID Settings
+    │   ├── action_type: rfid_settings
+    │   ├── mqtt_topic: stick/system/rfid
+    │   └── metadata
+    │       ├── antenna_power
+    │       ├── read_timeout_ms
+    │       └── duplicate_window_s
+    │
+    └── Mode & Safety
+        ├── action_type: mode_select
+        ├── mqtt_topic: stick/system/mode
+        └── metadata
+            ├── current_mode           (water_drink | corral_gate | pasture_zone | vaccination | ...)
+            └── confirm_before_send    (bool)
