@@ -1,0 +1,210 @@
+@startuml
+' ============================
+' Simplified + Complete ERD
+' Cattle Monitoring Platform (RFID + Telemetry + Vision + App/Web + Alerts)
+' ============================
+
+hide circle
+skinparam linetype ortho
+skinparam roundcorner 12
+skinparam shadowing false
+
+' ---------- ENTITIES ----------
+
+entity "cattle" as cattle {
+  * cattle_id : BIGINT <<PK>>
+  --
+  * ear_tag_code : VARCHAR(50) <<UQ>>  ' current tag (may change over time)
+  birth_date : DATE
+  breed : VARCHAR(50)
+  purchase_price : DECIMAL(10,2)
+  photo_url : VARCHAR(255)
+  status : ENUM(active,sold,dead,missing)
+  current_lot_id : BIGINT <<FK>>
+  current_site_id : BIGINT <<FK>>
+  created_at : TIMESTAMP
+}
+
+entity "ear_tags" as ear_tags {
+  * tag_id : BIGINT <<PK>>
+  --
+  * cattle_id : BIGINT <<FK>>
+  * ear_tag_code : VARCHAR(50) <<UQ>>
+  valid_from : DATETIME
+  valid_to : DATETIME
+  note : VARCHAR(255)
+}
+
+entity "sites" as sites {
+  * site_id : BIGINT <<PK>>
+  --
+  * site_code : VARCHAR(64) <<UQ>>
+  site_name : VARCHAR(128)
+  site_type : ENUM(farm,corral,pasture,barn,other)
+}
+
+entity "locations" as locations {
+  * location_id : BIGINT <<PK>>
+  --
+  * location_code : VARCHAR(64) <<UQ>>
+  * site_id : BIGINT <<FK>>
+  location_name : VARCHAR(128)
+  location_type : ENUM(water_point,gate,paddock,scale,shed,other)
+}
+
+entity "lots" as lots {
+  * lot_id : BIGINT <<PK>>
+  --
+  * lot_code : VARCHAR(64) <<UQ>>
+  lot_name : VARCHAR(128)
+  * site_id : BIGINT <<FK>>
+}
+
+entity "devices" as devices {
+  * device_id : VARCHAR(64) <<PK>>
+  --
+  device_type : ENUM(rfid_stick,jetson,gateway,sensor_node)
+  site_id : BIGINT <<FK>>
+  created_at : TIMESTAMP
+  last_seen_at : DATETIME
+}
+
+entity "operators" as operators {
+  * operator_id : BIGINT <<PK>>
+  --
+  name : VARCHAR(128)
+  role : ENUM(admin,vet,worker,viewer)
+}
+
+entity "events_raw" as events_raw {
+  * event_id : BIGINT <<PK>>
+  --
+  source : ENUM(rfid,telemetry,vision,system,alert)
+  * device_id : VARCHAR(64) <<FK>>
+  operator_id : BIGINT <<FK>>
+  received_at : TIMESTAMP
+  * event_time : DATETIME
+  * action_type : VARCHAR(64)
+  * action_category : VARCHAR(32)
+  site_id : BIGINT <<FK>>
+  location_id : BIGINT <<FK>>
+  ear_tag_code : VARCHAR(50)
+  cattle_id : BIGINT <<FK>>
+  payload_json : JSON
+  hash : CHAR(64) <<UQ>>
+  ingest_status : ENUM(ok,unknown_tag,invalid,duplicate)
+}
+
+entity "cattle_presence_state" as cattle_presence_state {
+  * cattle_id : BIGINT <<PK,FK>>
+  --
+  current_site_id : BIGINT <<FK>>
+  current_location_id : BIGINT <<FK>>
+  presence_status : ENUM(inside,outside,unknown)
+  last_seen_at : DATETIME
+  last_event_id : BIGINT <<FK>>
+}
+
+entity "vaccinations" as vaccinations {
+  * vaccination_id : BIGINT <<PK>>
+  --
+  * event_id : BIGINT <<UQ,FK>>
+  * cattle_id : BIGINT <<FK>>
+  vaccine_type : VARCHAR(64)
+  dose_ml : DECIMAL(6,2)
+  batch_id : VARCHAR(64)
+  next_due_date : DATE
+  applied_at : DATETIME
+}
+
+entity "environment_samples" as environment_samples {
+  * sample_id : BIGINT <<PK>>
+  --
+  * event_id : BIGINT <<UQ,FK>>
+  * site_id : BIGINT <<FK>>
+  location_id : BIGINT <<FK>>
+  temperature_c : DECIMAL(4,1)
+  humidity_percent : DECIMAL(5,2)
+  fire_detected : BOOLEAN
+  gas_ppm : INT
+  battery_percent : DECIMAL(5,2)
+  measured_at : DATETIME
+}
+
+entity "vision_site_summary" as vision_site_summary {
+  * vision_id : BIGINT <<PK>>
+  --
+  * event_id : BIGINT <<UQ,FK>>
+  * site_id : BIGINT <<FK>>
+  camera_id : VARCHAR(64)
+  * timestamp : DATETIME
+  cattle_count : INT
+  anomaly_detected : BOOLEAN
+  anomaly_classes : VARCHAR(255)
+  boundary_violation : BOOLEAN
+  cattle_outside_count : INT
+  activity_level : ENUM(low,normal,high)
+  confidence_avg : FLOAT
+  frame_window_s : INT
+  model_version : VARCHAR(64)
+}
+
+entity "alerts" as alerts {
+  * alert_id : BIGINT <<PK>>
+  --
+  created_at : TIMESTAMP
+  severity : ENUM(info,warning,critical)
+  * alert_type : VARCHAR(64)
+  site_id : BIGINT <<FK>>
+  location_id : BIGINT <<FK>>
+  cattle_id : BIGINT <<FK>>
+  related_event_id : BIGINT <<FK>>
+  message : VARCHAR(255)
+  details_json : JSON
+  status : ENUM(open,ack,closed)
+}
+
+' ---------- RELATIONSHIPS ----------
+
+' Cattle identity and tags
+cattle ||--o{ ear_tags : has_history
+cattle ||--|| cattle_presence_state : current_state
+
+' Physical structure
+sites ||--o{ locations : contains
+sites ||--o{ lots : has
+sites ||--o{ devices : hosts
+
+lots ||--o{ cattle : groups
+sites ||--o{ cattle : default_site
+
+' Ingestion core
+devices ||--o{ events_raw : produces
+operators ||--o{ events_raw : performed_by
+
+sites ||--o{ events_raw : occurs_at
+locations ||--o{ events_raw : occurs_at
+
+cattle ||--o{ events_raw : relates_to
+
+' Presence derived from events
+events_raw ||--o{ cattle_presence_state : last_event
+
+' Specialized/materialized tables (optional but included)
+events_raw ||--o| vaccinations : materializes
+cattle ||--o{ vaccinations : receives
+
+events_raw ||--o| environment_samples : materializes
+sites ||--o{ environment_samples : sampled_at
+locations ||--o{ environment_samples : sampled_at
+
+events_raw ||--o| vision_site_summary : materializes
+sites ||--o{ vision_site_summary : monitored_at
+
+' Alerts generated by gateway/rules
+events_raw ||--o{ alerts : triggers
+cattle ||--o{ alerts : concerns
+sites ||--o{ alerts : concerns
+locations ||--o{ alerts : concerns
+
+@enduml
