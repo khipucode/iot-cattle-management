@@ -56,49 +56,81 @@ def on_message(client, userdata, msg):
     payload_str = msg.payload.decode("utf-8", errors="ignore")
     try:
         data = json.loads(payload_str)
-        print(f"Recebido: {data}")  # Debug
+        print(f"Recebido: {data}")
 
-        # Tenta diferentes formatos de campos
-        # Formato 1: campos novos do gerador
-        bovino_id = data.get("bovino_id") or data.get("id")
-        tipo_evento = data.get("tipo_evento") or data.get("evento")
-        
-        # Formato 2: campo antigo (se ainda usar)
-        if not bovino_id or not tipo_evento:
-            print("Mensagem inválida - campos obrigatórios faltando:", data)
-            return
+        # Debug extra: mostrar valores e tipos
+        print("DEBUG -> event_time:", data.get("event_time"), type(data.get("event_time")))
+        print("DEBUG -> cattle_id:", data.get("cattle_id"), type(data.get("cattle_id")))
+        print("DEBUG -> device_id:", data.get("device_id"), type(data.get("device_id")))
+        print("DEBUG -> operator_id:", data.get("operator_id"), type(data.get("operator_id")))
+        print("DEBUG -> site_id:", data.get("site_id"), type(data.get("site_id")))
+        print("DEBUG -> location_id:", data.get("location_id"), type(data.get("location_id")))
+        print("DEBUG -> event_type:", data.get("event_type"), type(data.get("event_type")))
 
-        # Cria observação a partir dos campos extras
-        obs_parts = []
-        if data.get("local"):
-            obs_parts.append(f"Local: {data['local']}")
-        if data.get("temperatura"):
-            obs_parts.append(f"Temp: {data['temperatura']}°C")
-        if data.get("peso_kg"):
-            obs_parts.append(f"Peso: {data['peso_kg']}kg")
-        
-        obs = data.get("obs", ", ".join(obs_parts)) if obs_parts else "sem observação"
+        # Conversão explícita
+        event_time  = data.get("event_time") or time.strftime("%Y-%m-%d %H:%M:%S")
+        cattle_id   = int(data.get("cattle_id")) if data.get("cattle_id") is not None else None
+        device_id   = str(data.get("device_id")) if data.get("device_id") is not None else None
+        operator_id = int(data.get("operator_id")) if data.get("operator_id") is not None else None
+        site_id     = int(data.get("site_id")) if data.get("site_id") is not None else None
+        location_id = int(data.get("location_id")) if data.get("location_id") is not None else None
+        event_type  = str(data.get("event_type", "other"))
 
-        # Usa data_evento do JSON ou NOW() se não tiver
-        data_evento = data.get("data_evento")
-        
-        sql = """
-            INSERT INTO eventos (bovino_id, tipo_evento, data_evento, observacao, payload_json)
-            VALUES (%s, %s, %s, %s, %s)
+        # Inserir na tabela events_raw
+        sql_event = """
+            INSERT INTO events_raw (event_time, cattle_id, device_id, operator_id, site_id, location_id, event_type, event_data)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
-        
-        if data_evento:
-            valores = (bovino_id, tipo_evento, data_evento, obs, json.dumps(data))
-        else:
-            valores = (bovino_id, tipo_evento, "NOW()", obs, json.dumps(data))
-        
+        valores_event = (
+            event_time,
+            cattle_id,
+            device_id,
+            operator_id,
+            site_id,
+            location_id,
+            event_type,
+            json.dumps(data)
+        )
         ensure_connection()
-        cursor.execute(sql, valores)
-        print(f"✅ Evento inserido: Boi {bovino_id} - {tipo_evento}")
+        cursor.execute(sql_event, valores_event)
+        print(f"✅ Evento inserido em events_raw: Boi {cattle_id} - {event_type}")
+
+        # Se a mensagem tiver peso, insere também em cattle_weights
+        if "peso_kg" in data:
+            sql_weight = """
+                INSERT INTO cattle_weights (cattle_id, weight_date, weight, notes)
+                VALUES (%s, %s, %s, %s)
+            """
+            valores_weight = (
+                cattle_id,
+                event_time,
+                float(data["peso_kg"]),
+                data.get("obs", "")
+            )
+            cursor.execute(sql_weight, valores_weight)
+            print(f"✅ Peso inserido em cattle_weights: Boi {cattle_id} - {data['peso_kg']}kg")
+
+        # Se a mensagem tiver dados ambientais, insere em environment_samples
+        if "temperatura" in data or "umidade" in data:
+            sql_env = """
+                INSERT INTO environment_samples (site_id, location_id, sample_time, temperature, humidity, other_data)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            valores_env = (
+                site_id,
+                location_id,
+                event_time,
+                float(data.get("temperatura")) if data.get("temperatura") is not None else None,
+                float(data.get("umidade")) if data.get("umidade") is not None else None,
+                json.dumps(data)
+            )
+            cursor.execute(sql_env, valores_env)
+            print(f"✅ Amostra ambiental inserida em environment_samples")
 
     except Exception as e:
         print(f"❌ Erro ao processar mensagem: {e}")
         print(f"Dados: {data if 'data' in locals() else 'n/a'}")
+
 # Função principal do consumidor
 def mqtt_loop():
     client = mqtt.Client()
@@ -119,10 +151,7 @@ def health():
         return f"erro: {e}", 500
 
 if __name__ == "__main__":
-    # roda o loop MQTT em thread separada
     t = threading.Thread(target=mqtt_loop, daemon=True)
     t.start()
-
-    # inicia servidor Flask para healthcheck
     app.run(host="0.0.0.0", port=8000)
 

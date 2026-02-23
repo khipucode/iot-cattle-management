@@ -72,9 +72,13 @@ O sistema combina **componentes de hardware** e **software** para criar uma solu
 ```text
 brinco-boi/
 │
+├── arquiteture
+│   ├── computer-vision
+│   └── handheld_select.md
 ├── consumidor
 │   ├── consumidor.py
 │   ├── Dockerfile
+│   ├── logs
 │   └── requirements.txt
 ├── dados
 │   ├── grafana
@@ -91,9 +95,20 @@ brinco-boi/
 │   ├── dados
 │   ├── eventos
 │   └── grafana.ini
+├── grafana
+│   └── provisioning
 ├── grafana.ini
 ├── hardware
 │   └── README.md
+├── init-scripts
+├── mosquitto
+│   └── config
+├── Pasta_Testes_Populate
+│   ├── como_usar.txt
+│   ├── Dockerfile
+│   ├── logs
+│   ├── populate_data.py
+│   └── requirements.txt
 ├── README.md
 ├── teste_Pub_Sub_Mosquitto.txt
 └── webapp

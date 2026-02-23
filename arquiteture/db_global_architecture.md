@@ -154,7 +154,7 @@ Armazena **todos os eventos** vindos da vara RFID, sensores, visão computaciona
 | `operator_id` | Operador (se aplicável) |
 | `received_at` | Hora de ingestão no servidor |
 | `event_time` | Hora real do evento |
-| `action_type` | Tipo da ação (`water_drink`, `vaccination`, etc.) |
+| `event_type` | Tipo da ação (`water_drink`, `vaccination`, etc.) |
 | `action_category` | Categoria (`passive`, `active`, `telemetry`, `vision`) |
 | `site_id` | Local do evento |
 | `location_id` | Ponto específico |

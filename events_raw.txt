@@ -1,0 +1,151 @@
+# Reconstrói as imagens dos serviços que têm Dockerfile
+docker compose -f docker-compose-fazenda.yml build
+
+# Sobe os containers em segundo plano
+docker compose -f docker-compose-fazenda.yml up -d
+
+# Para parar os containers (sem remover)
+docker compose -f docker-compose-fazenda.yml stop
+
+# Parar todos os serviços (mantém os containers criados)
+docker compose -f docker-compose-fazenda.yml down
+
+# Derrubar e limpar tudo (containers + volumes) USAR APENAS EM ÚLTIMO CASO SE NÂO SOUBER NÂO USE ESTE COMANDO
+docker compose -f docker-compose-fazenda.yml down --volumes
+
+### Abaixo seguem algumas queries para se usar tanto no banco quanto no grafana
+
+# Últimos eventos por bovino
+WITH ultimos AS (
+    SELECT cattle_id, MAX(event_time) AS ultimo_evento
+    FROM events_raw
+    GROUP BY cattle_id
+)
+SELECT 
+    b.id, b.brinco, b.raca,
+    e.event_type, e.event_time,
+    CASE WHEN e.event_time = u.ultimo_evento THEN 'Ultimo' ELSE 'Anterior' END AS status_evento
+FROM bovinos b
+JOIN events_raw e ON b.id = e.cattle_id
+JOIN ultimos u ON e.cattle_id = u.cattle_id
+ORDER BY b.id, e.event_time;
+
+
+# Último evento de cada bovino
+SELECT 
+    b.id, b.brinco, b.raca,
+    e.event_type, e.event_time AS ultimo_evento
+FROM bovinos b
+JOIN events_raw e ON b.id = e.cattle_id
+WHERE e.event_time = (
+    SELECT MAX(e2.event_time)
+    FROM events_raw e2
+    WHERE e2.cattle_id = b.id
+)
+ORDER BY b.id;
+
+
+# Histórico de pesagens
+SELECT 
+    cw.cattle_id, b.brinco, b.raca,
+    cw.weight_kg, cw.weight_time
+FROM cattle_weights cw
+JOIN bovinos b ON cw.cattle_id = b.id
+ORDER BY cw.weight_time DESC;
+
+# Última pesagem por bovino
+SELECT 
+    cw.cattle_id, b.brinco, b.raca,
+    MAX(cw.weight_time) AS ultima_pesagem,
+    MAX(cw.weight_kg) KEEP (DENSE_RANK LAST ORDER BY cw.weight_time) AS peso_kg
+FROM cattle_weights cw
+JOIN bovinos b ON cw.cattle_id = b.id
+GROUP BY cw.cattle_id, b.brinco, b.raca;
+
+# Amostras ambientais recentes
+SELECT 
+    es.location_id, l.location_name,
+    es.temperature, es.humidity, es.sample_time
+FROM environment_samples es
+JOIN locations l ON es.location_id = l.location_id
+ORDER BY es.sample_time DESC
+LIMIT 20;
+
+
+# Essas consultas são boas candidatas para painéis no Grafana:
+
+Tabela → últimos eventos por bovino.
+
+Time series → evolução de peso por bovino.
+
+Gauge/SingleStat → última pesagem.
+
+Gráfico de linhas → temperatura/umidade por estação.
+
+### Para testes MQTT
+
+# Eventos de movimentação
+
+mosquitto_pub -h localhost -p 1883 -t fazenda/sensores/evento -m '{
+  "cattle_id": 5,
+  "device_id": "1",
+  "operator_id": 2,
+  "site_id": 1,
+  "location_id": 1,
+  "event_type": "entrada_curral",
+  "event_time": "2026-02-23 12:25:00",
+  "obs": "Animal entrou no curral"
+}'
+
+mosquitto_pub -h localhost -p 1883 -t fazenda/sensores/evento -m '{
+  "cattle_id": 5,
+  "device_id": "1",
+  "operator_id": 2,
+  "site_id": 1,
+  "location_id": 1,
+  "event_type": "saida_curral",
+  "event_time": "2026-02-23 12:26:00",
+  "obs": "Animal saiu do curral"
+}'
+
+# Evento de vacinação
+
+mosquitto_pub -h localhost -p 1883 -t fazenda/sensores/evento -m '{
+  "cattle_id": 7,
+  "device_id": "2",
+  "operator_id": 3,
+  "site_id": 1,
+  "location_id": 2,
+  "event_type": "vacinação",
+  "event_time": "2026-02-23 12:27:00",
+  "obs": "Vacina aplicada automaticamente"
+}'
+
+
+# Evento de pesagem
+
+mosquitto_pub -h localhost -p 1883 -t fazenda/sensores/peso -m '{
+  "cattle_id": 9,
+  "device_id": "3",
+  "operator_id": 1,
+  "site_id": 1,
+  "location_id": 2,
+  "event_type": "pesagem",
+  "event_time": "2026-02-23 12:28:00",
+  "peso_kg": 355.2,
+  "obs": "Pesagem automática"
+}'
+
+# Evento de amostra ambiental
+bash
+mosquitto_pub -h localhost -p 1883 -t fazenda/sensores/ambiente -m '{
+  "device_id": "2",
+  "operator_id": 1,
+  "site_id": 1,
+  "location_id": 3,
+  "event_type": "amostra_ambiente",
+  "event_time": "2026-02-23 12:29:00",
+  "temperatura": 27.8,
+  "umidade": 61,
+  "obs": "Coleta automática estação meteo"
+}'

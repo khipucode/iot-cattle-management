@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Gerador de dados FINAL - Usa IP fixo do Mosquitto
+Gerador de dados atualizado para novas tabelas e tópicos MQTT
+Compatível com events_raw, cattle_weights e environment_samples
 """
 import paho.mqtt.client as mqtt
 import json
@@ -13,17 +14,22 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# IP DO MOSQUITTO (do comando docker inspect)
-MQTT_HOST = '172.19.0.3'  # ← IP FIXO do container mosquitto
+# Host do Mosquitto (usar localhost porque a porta 1883 está exposta no host)
+MQTT_HOST = 'localhost'
 MQTT_PORT = 1883
-MQTT_TOPIC = 'fazenda/sensores/evento'
+
+# Tópicos usados pelo consumidor
+MQTT_TOPICS = {
+    "evento": "fazenda/sensores/evento",
+    "peso": "fazenda/sensores/peso",
+    "ambiente": "fazenda/sensores/ambiente"
+}
 
 def main():
-    logger.info(f"🚀 Iniciando gerador de dados")
+    logger.info("🚀 Iniciando gerador de dados")
     logger.info(f"📡 Conectando ao MQTT: {MQTT_HOST}:{MQTT_PORT}")
     
-    # Cria cliente MQTT
-    client = mqtt.Client(client_id="gerador_boi", callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
+    client = mqtt.Client(client_id="gerador_boi")
     
     try:
         client.connect(MQTT_HOST, MQTT_PORT, 60)
@@ -34,34 +40,55 @@ def main():
     
     client.loop_start()
     
-    # Eventos baseados no seu projeto
-    eventos = [
-        "bebeu agua", "foi ao pasto", "alimentou-se", 
-        "entrou na ordenha", "saiu da ordenha", "pesagem",
-        "vacinação", "detectado em cio", "temperatura alta"
-    ]
-    
-    locais = ["bebedouro_norte", "cocho_principal", "sala_ordenha", "pastagem", "curral"]
-    
     contador = 0
     try:
         while True:
-            # Gera evento realista
-            evento = {
-                "bovino_id": random.randint(1, 20),
-                "brinco": f"BR{random.randint(10000, 19999):05d}",
-                "tipo_evento": random.choice(eventos),
-                "data_evento": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "local": random.choice(locais),
-                "temperatura": round(random.uniform(38.0, 39.5), 1) if random.random() > 0.7 else None,
-                "peso_kg": round(random.uniform(200, 400), 1) if random.random() > 0.8 else None
-            }
+            # Decide aleatoriamente qual tipo de mensagem enviar
+            tipo = random.choice(["evento", "peso", "ambiente"])
             
-            # Publica no MQTT
-            client.publish(MQTT_TOPIC, json.dumps(evento), qos=1)
+            if tipo == "evento":
+                msg = {
+                    "cattle_id": random.randint(1, 20),
+                    "device_id": str(random.randint(1, 5)),   # dispositivo
+                    "operator_id": random.randint(1, 3),     # operador
+                    "site_id": 1,
+                    "location_id": random.randint(1, 3),
+                    "event_type": random.choice(["entrada_curral", "saida_curral", "vacinação"]),
+                    "event_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "obs": random.choice(["animal entrou", "animal saiu", "vacinação realizada"])
+                }
+            
+            elif tipo == "peso":
+                msg = {
+                    "cattle_id": random.randint(1, 20),
+                    "device_id": str(random.randint(1, 5)),
+                    "operator_id": random.randint(1, 3),
+                    "site_id": 1,
+                    "location_id": 2,
+                    "event_type": "pesagem",
+                    "event_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "peso_kg": round(random.uniform(200, 400), 1),
+                    "obs": "Pesagem automática"
+                }
+            
+            else:  # ambiente
+                msg = {
+                    "device_id": str(random.randint(1, 5)),
+                    "operator_id": random.randint(1, 3),
+                    "site_id": 1,
+                    "location_id": 3,
+                    "event_type": "amostra_ambiente",
+                    "event_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "temperatura": round(random.uniform(25, 32), 1),
+                    "umidade": random.randint(50, 80),
+                    "obs": "Coleta automática estação meteo"
+                }
+            
+            # Publica no tópico correto
+            client.publish(MQTT_TOPICS[tipo], json.dumps(msg), qos=1)
             contador += 1
             
-            logger.info(f"📤 [{contador:04d}] Boi {evento['bovino_id']} ({evento['brinco']}) - {evento['tipo_evento']} em {evento['local']}")
+            logger.info(f"📤 [{contador:04d}] Publicado em {tipo}: {msg}")
             
             # Intervalo aleatório entre 2-8 segundos
             time.sleep(random.uniform(2, 8))
@@ -77,3 +104,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

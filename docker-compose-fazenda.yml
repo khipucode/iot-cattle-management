@@ -71,7 +71,7 @@ services:
       context: ./consumidor
       dockerfile: Dockerfile
     container_name: fazenda-consumidor
-    restart: unless-stopped
+    #restart: unless-stopped
     depends_on:
       mariadb:
         condition: service_healthy
