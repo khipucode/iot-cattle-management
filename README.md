@@ -160,3 +160,5 @@ Os dados do Grafana são persistidos em `./dados/grafana`.
 - Esses diretórios **não devem ser versionados** (já estão no `.gitignore`).  
 - Para alterar credenciais, edite o arquivo `docker-compose.yml`.  
 - Em produção, recomenda-se desabilitar acesso anônimo no Grafana e usar senhas fortes.
+
+## revisar
