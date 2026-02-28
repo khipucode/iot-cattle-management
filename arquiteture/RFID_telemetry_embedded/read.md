@@ -1,29 +1,31 @@
 # 📘 README — Pinagem Completa do Sistema Embarcado com ESP32 (ESP32-WROOM-32)
 
-Este documento descreve a **distribuição completa de GPIOs** do sistema embarcado baseado em **ESP32 DevKit (ESP32-WROOM-32)**, substituindo a unidade central Pico W do diagrama original.
+Este documento descreve a **distribuição completa e atualizada de GPIOs** do sistema embarcado utilizando um **ESP32 DevKit (ESP32-WROOM-32)** como unidade central.
 
-O objetivo é fornecer uma pinagem:
+A arquitetura foi organizada considerando:
 
-✅ Estável para WiFi ativo  
-✅ Compatível com ADC do ESP32  
-✅ Sem conflitos de boot  
-✅ Organizada por barramentos (SPI / I2C / GPIO / ADC / PWM)
+✅ Estabilidade elétrica  
+✅ Compatibilidade com WiFi ativo  
+✅ Uso correto do ADC do ESP32  
+✅ Barramentos dedicados (SPI / I2C)  
+✅ Boot seguro do microcontrolador  
+✅ Facilidade futura para PCB
 
 ---
 
 # 🧠 Arquitetura do Sistema
 
-Dispositivos integrados:
+Dispositivos conectados:
 
-- 📡 RFID RC522 (SPI)
-- 🖥️ Display OLED SSD1306 (I2C)
-- 🌡️ Sensor DHT22
+- 📡 RFID **RC522** (SPI)
+- 🖥️ Display OLED **SSD1306** (I2C)
+- 🌡️ Sensor **DHT22**
 - 🎮 Joystick Analógico (2 eixos + botão)
 - 🔊 Buzzer
 - 💡 LEDs de Status
 - 🔘 Chave Liga/Desliga
 
-Controlador central:
+Controlador principal:
 
 > **ESP32 DevKit — ESP32-WROOM-32**
 
@@ -31,15 +33,21 @@ Controlador central:
 
 # ⚠️ Boas Práticas do ESP32
 
-## Pinos evitados
+## Pinos que NÃO devem ser usados
+
 | GPIO | Motivo |
 |------|--------|
 | 6–11 | Flash interna |
 | 12 | Problemas de boot voltage |
-| 0,2,15 | Strapping pins (usar com cuidado) |
+| 0, 2, 15 | Strapping pins (usar com cuidado) |
+
+---
 
 ## ADC recomendado
-Usar **ADC1 (GPIO32–39)** quando WiFi estiver ativo.
+
+Quando WiFi estiver ativo:
+
+✅ Usar apenas **ADC1 → GPIO32–39**
 
 ---
 
@@ -47,44 +55,63 @@ Usar **ADC1 (GPIO32–39)** quando WiFi estiver ativo.
 
 ---
 
-## 📡 RFID — RC522 (SPI)
+# 📡 RFID — RC522 (SPI)
 
-Interface: **VSPI**
+## Pinagem real do módulo
 
-| RC522 | GPIO ESP32 | Função |
-|------|------------|--------|
-| SDA (CS) | GPIO5 | Chip Select |
-| SCK | GPIO18 | Clock SPI |
-| MOSI | GPIO23 | Dados Master → Slave |
-| MISO | GPIO19 | Dados Slave → Master |
-| RST | GPIO32 | Reset do módulo |
-| VCC | 3.3V | Alimentação |
-| GND | GND | Terra |
+| RC522 | Descrição |
+|------|-----------|
+| 3.3V | Alimentação |
+| RST | Reset |
+| GND | Terra |
+| IRQ | Interrupção (opcional) |
+| MISO | SPI data out |
+| MOSI | SPI data in |
+| SCK | Clock SPI |
+| SDA | Chip Select (CS) |
 
-✅ Usa barramento SPI padrão do ESP32.
+⚠️ **SDA ≠ I2C** (é CS do SPI).
 
 ---
 
-## 🖥️ Display OLED — SSD1306 (I2C)
+## Conexão RC522 → ESP32 (VSPI Hardware)
 
-Interface: **I2C**
+| RC522 Pin | GPIO ESP32 | Função |
+|-----------|------------|--------|
+| 3.3V | 3.3V | Alimentação |
+| GND | GND | Terra |
+| SCK | **GPIO18** | Clock SPI |
+| MOSI | **GPIO23** | Master Out |
+| MISO | **GPIO19** | Master In |
+| SDA (CS) | **GPIO5** | Chip Select |
+| RST | **GPIO32** | Reset |
+| IRQ | **GPIO33** (opcional) | Interrupção |
+
+---
+
+## Barramento SPI utilizado
+
+
+---
+
+# 🖥️ Display OLED — SSD1306 (I2C)
 
 | OLED | GPIO ESP32 |
 |------|------------|
-| SDA | GPIO21 |
-| SCL | GPIO22 |
+| SDA | **GPIO21** |
+| SCL | **GPIO22** |
 | VCC | 3.3V |
 | GND | GND |
 
-✅ Pinagem I2C padrão oficial ESP32.
+✅ Pinagem padrão oficial ESP32.
 
 ---
 
-## 🌡️ Sensor DHT22
+# 🌡️ Sensor DHT22
 
 | DHT22 | GPIO ESP32 |
 |-------|------------|
-| DATA | GPIO27 |
+| DATA | **GPIO27** |
 | VCC | 3.3V |
 | GND | GND |
 
@@ -92,37 +119,38 @@ Interface: **I2C**
 
 ---
 
-## 🎮 Joystick Analógico (Atualizado)
+# 🎮 Joystick Analógico (Atualizado)
 
-Baseado no código de referência Arduino fornecido:
+Joystick possui:
 
+| Pino | Função |
+|------|--------|
+| VCC | Alimentação |
+| GND | Terra |
+| VERT | Eixo vertical (analógico) |
+| HORZ | Eixo horizontal (analógico) |
+| SEL | Botão |
 
 ---
 
-### Conversão correta para ESP32
+## Conexão Joystick → ESP32
 
 | Joystick | GPIO ESP32 | Tipo |
 |-----------|------------|------|
-| VERT | GPIO34 | ADC1 (analógico) |
-| HORZ | GPIO35 | ADC1 (analógico) |
-| SEL | GPIO33 | Digital INPUT_PULLUP |
+| VERT | **GPIO34** | ADC1 |
+| HORZ | **GPIO35** | ADC1 |
+| SEL | **GPIO33** | Digital INPUT_PULLUP |
 | VCC | 3.3V | Alimentação |
 | GND | GND | Terra |
 
-### Motivos técnicos
-
-- GPIO34/35 → ADC1 (funciona com WiFi)
-- Input-only → ideal para sensores analógicos
-- GPIO33 → entrada digital estável
-
 ---
 
-### ⚙ Ajuste necessário no código (ESP32)
+## Ajuste necessário no código ESP32
 
 ESP32 usa resolução 12 bits:
 
 
-Threshold equivalente:
+Equivalência:
 
 | Arduino UNO | ESP32 |
 |-------------|-------|
@@ -131,43 +159,39 @@ Threshold equivalente:
 
 ---
 
-## 🔊 Buzzer
+# 🔊 Buzzer
 
 | Buzzer | GPIO ESP32 |
 |--------|------------|
-| Signal | GPIO2 |
+| Signal | **GPIO2** |
 | VCC | 3.3V |
 | GND | GND |
 
-⚠ GPIO2 é strapping pin — garantir que não fique LOW no boot.
+⚠ GPIO2 é strapping pin — não deve ficar LOW no boot.
 
-(Recomendação ultra-segura alternativa: GPIO25)
+Alternativa ultra segura: GPIO25.
 
 ---
 
-## 💡 LEDs de Status
+# 💡 LEDs de Status
 
 | LED | GPIO |
 |-----|------|
-| LED1 | GPIO25 |
-| LED2 | GPIO26 |
+| LED1 | **GPIO25** |
+| LED2 | **GPIO26** |
 
-Usar resistor série 220Ω–1kΩ.
-
----
-
-## 🔘 Chave Liga / Desliga
-
-Duas opções:
-
-### ✅ Recomendado
-Chave conectada ao pino:
-
+Usar resistor série (220Ω–1kΩ).
 
 ---
 
-### Alternativa
-Chave cortando alimentação VCC da placa.
+# 🔘 Chave Liga / Desliga
+
+## Opção recomendada
+Conectar chave ao pino:
+
+
+## Alternativa
+Chave cortando alimentação VCC.
 
 ---
 
@@ -175,11 +199,12 @@ Chave cortando alimentação VCC da placa.
 
 | Dispositivo | Interface | GPIO |
 |-------------|-----------|------|
-| RC522 CS | SPI | 5 |
 | RC522 SCK | SPI | 18 |
 | RC522 MOSI | SPI | 23 |
 | RC522 MISO | SPI | 19 |
+| RC522 CS | SPI | 5 |
 | RC522 RST | GPIO | 32 |
+| RC522 IRQ | Interrupt | 33 (opcional) |
 | OLED SDA | I2C | 21 |
 | OLED SCL | I2C | 22 |
 | DHT22 DATA | GPIO | 27 |
@@ -192,3 +217,21 @@ Chave cortando alimentação VCC da placa.
 | Power Switch | EN | — |
 
 ---
+
+# 📌 Resumo Final dos Pinados
+
+## SPI — RC522
+
+---
+
+# ✅ Características da Arquitetura
+
+✔ SPI hardware otimizado  
+✔ I2C independente  
+✔ ADC funcional com WiFi  
+✔ Boot seguro do ESP32  
+✔ Organização pronta para PCB  
+✔ Expansível para IoT/MQTT
+
+---
+
