@@ -102,7 +102,7 @@ services:
       context: ./Pasta_Testes_Populate
       dockerfile: Dockerfile
     container_name: fazenda-gerador
-    restart: unless-stopped  # ← APENAS ISTO, sem comando shell!
+    restart: "no"  # ← Não Reinicia sozinho.
     depends_on:
       mosquitto:
         condition: service_healthy

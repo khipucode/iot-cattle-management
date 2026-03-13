@@ -58,15 +58,6 @@ def on_message(client, userdata, msg):
         data = json.loads(payload_str)
         print(f"Recebido: {data}")
 
-        # Debug extra: mostrar valores e tipos
-        print("DEBUG -> event_time:", data.get("event_time"), type(data.get("event_time")))
-        print("DEBUG -> cattle_id:", data.get("cattle_id"), type(data.get("cattle_id")))
-        print("DEBUG -> device_id:", data.get("device_id"), type(data.get("device_id")))
-        print("DEBUG -> operator_id:", data.get("operator_id"), type(data.get("operator_id")))
-        print("DEBUG -> site_id:", data.get("site_id"), type(data.get("site_id")))
-        print("DEBUG -> location_id:", data.get("location_id"), type(data.get("location_id")))
-        print("DEBUG -> event_type:", data.get("event_type"), type(data.get("event_type")))
-
         # Conversão explícita
         event_time  = data.get("event_time") or time.strftime("%Y-%m-%d %H:%M:%S")
         cattle_id   = int(data.get("cattle_id")) if data.get("cattle_id") is not None else None
@@ -95,23 +86,24 @@ def on_message(client, userdata, msg):
         cursor.execute(sql_event, valores_event)
         print(f"✅ Evento inserido em events_raw: Boi {cattle_id} - {event_type}")
 
-        # Se a mensagem tiver peso, insere também em cattle_weights
-        if "peso_kg" in data:
+        # Inserir na tabela cattle_weights (novo schema)
+        if "weight" in data:
             sql_weight = """
-                INSERT INTO cattle_weights (cattle_id, weight_date, weight, notes)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO cattle_weights (cattle_id, weight_date, weight, location_id, notes)
+                VALUES (%s, %s, %s, %s, %s)
             """
             valores_weight = (
                 cattle_id,
-                event_time,
-                float(data["peso_kg"]),
-                data.get("obs", "")
+                data.get("weight_date", event_time),
+                float(data["weight"]),
+                location_id,
+                data.get("notes", "")
             )
             cursor.execute(sql_weight, valores_weight)
-            print(f"✅ Peso inserido em cattle_weights: Boi {cattle_id} - {data['peso_kg']}kg")
+            print(f"✅ Peso inserido em cattle_weights: Boi {cattle_id} - {data['weight']}kg")
 
-        # Se a mensagem tiver dados ambientais, insere em environment_samples
-        if "temperatura" in data or "umidade" in data:
+        # Inserir na tabela environment_samples (novo schema)
+        if "temperature" in data or "humidity" in data:
             sql_env = """
                 INSERT INTO environment_samples (site_id, location_id, sample_time, temperature, humidity, other_data)
                 VALUES (%s, %s, %s, %s, %s, %s)
@@ -119,10 +111,10 @@ def on_message(client, userdata, msg):
             valores_env = (
                 site_id,
                 location_id,
-                event_time,
-                float(data.get("temperatura")) if data.get("temperatura") is not None else None,
-                float(data.get("umidade")) if data.get("umidade") is not None else None,
-                json.dumps(data)
+                data.get("sample_time", event_time),
+                float(data.get("temperature")) if data.get("temperature") is not None else None,
+                float(data.get("humidity")) if data.get("humidity") is not None else None,
+                json.dumps(data.get("other_data", {}))
             )
             cursor.execute(sql_env, valores_env)
             print(f"✅ Amostra ambiental inserida em environment_samples")
