@@ -1,0 +1,155 @@
+RFID Stick - Menu (Prototype MQTT Sender)
+│
+├── 1 ─ ID Vara
+│     ├── V001
+│     ├── V002
+│     └── V003
+│
+├── 2 ─ Operador
+│     ├── D001
+│     ├── D002
+│     └── D003
+│
+├── 3 ─ Sanitário
+│     │
+│     ├── Vacinação
+│     │     ├── action_type: vaccination
+│     │     ├── mqtt_topic: cattle/action/health/vaccination
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     └── Controle de Parasitas
+│           ├── action_type: parasite_control
+│           ├── mqtt_topic: cattle/action/health/parasite
+│           ├── confirmed: true
+│           └── metadata
+│                 ├── timestamp
+│                 ├── stick_id
+│                 └── operator_id
+│
+├── 4 ─ Reprodução
+│     │
+│     ├── Cio
+│     │     ├── action_type: heat_detection
+│     │     ├── mqtt_topic: cattle/action/repro/heat
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     ├── Inseminação
+│     │     ├── action_type: insemination
+│     │     ├── mqtt_topic: cattle/action/repro/insemination
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     ├── Diagnóstico de Prenhez
+│     │     ├── action_type: pregnancy_check
+│     │     ├── mqtt_topic: cattle/action/repro/pregnancy
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     └── Desmame
+│           ├── action_type: weaning
+│           ├── mqtt_topic: cattle/action/repro/weaning
+│           ├── confirmed: true
+│           └── metadata
+│                 ├── timestamp
+│                 ├── stick_id
+│                 └── operator_id
+│
+├── 5 ─ Inventário e Logística
+│     │
+│     ├── Atribuição de Lote
+│     │     ├── action_type: lot_assignment
+│     │     ├── mqtt_topic: cattle/action/inventory/lot
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     ├── Pesagem Manual
+│     │     ├── action_type: manual_weight
+│     │     ├── mqtt_topic: cattle/action/inventory/manual_weight
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     └── Descarte
+│           ├── action_type: culling_flag
+│           ├── mqtt_topic: cattle/action/inventory/culling
+│           ├── confirmed: true
+│           └── metadata
+│                 ├── timestamp
+│                 ├── stick_id
+│                 └── operator_id
+│
+├── 6 ─ Eventos
+│     │
+│     ├── Água
+│     │     ├── action_type: water_drink
+│     │     ├── mqtt_topic: cattle/event/water
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     ├── Porteira
+│     │     ├── action_type: corral_gate
+│     │     ├── mqtt_topic: cattle/event/corral
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     ├── Piquete
+│     │     ├── action_type: pasture_zone
+│     │     ├── mqtt_topic: cattle/event/pasture
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     ├── Pesagem Automática
+│     │     ├── action_type: auto_weigh
+│     │     ├── mqtt_topic: cattle/event/weight
+│     │     ├── confirmed: true
+│     │     └── metadata
+│     │           ├── timestamp
+│     │           ├── stick_id
+│     │           └── operator_id
+│     │
+│     └── Telemetria
+│           ├── action_type: telemetry
+│           ├── mqtt_topic: stick/telemetry/environment
+│           ├── confirmed: true
+│           └── metadata
+│                 ├── timestamp
+│                 ├── stick_id
+│                 ├── operator_id
+│                 ├── temperature_c
+│                 └── humidity_percent
+│
+└── 7 ─ Cadastro
+      ├── action_type: registration
+      ├── mqtt_topic: cattle/action/registration
+      └── metadata
+            ├── timestamp
+            ├── stick_id
+            └── operator_id
