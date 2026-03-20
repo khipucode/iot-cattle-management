@@ -21,7 +21,7 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │     │           ├── stick_id
 │     │           └── operator_id
 │     │
-│     └── Controle de Parasitas
+│     └── Ctrl.Parasitas
 │           ├── action_type: parasite_control
 │           ├── mqtt_topic: cattle/action/health/parasite
 │           ├── confirmed: true
@@ -50,7 +50,7 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │     │           ├── stick_id
 │     │           └── operator_id
 │     │
-│     ├── Diagnóstico de Prenhez
+│     ├── Prenhez
 │     │     ├── action_type: pregnancy_check
 │     │     ├── mqtt_topic: cattle/action/repro/pregnancy
 │     │     ├── confirmed: true
@@ -70,7 +70,7 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │
 ├── 5 ─ Inventário e Logística
 │     │
-│     ├── Atribuição de Lote
+│     ├── Atrib. Lote
 │     │     ├── action_type: lot_assignment
 │     │     ├── mqtt_topic: cattle/action/inventory/lot
 │     │     ├── confirmed: true
@@ -79,7 +79,7 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │     │           ├── stick_id
 │     │           └── operator_id
 │     │
-│     ├── Pesagem Manual
+│     ├── Pesagem 
 │     │     ├── action_type: manual_weight
 │     │     ├── mqtt_topic: cattle/action/inventory/manual_weight
 │     │     ├── confirmed: true
@@ -106,7 +106,9 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │     │     └── metadata
 │     │           ├── timestamp
 │     │           ├── stick_id
-│     │           └── operator_id
+│     │           ├── operator_id
+│     │           ├── temperature_c
+│     │           └── humidity_percent
 │     │
 │     ├── Porteira
 │     │     ├── action_type: corral_gate
@@ -115,7 +117,9 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │     │     └── metadata
 │     │           ├── timestamp
 │     │           ├── stick_id
-│     │           └── operator_id
+│     │           ├── operator_id
+│     │           ├── temperature_c
+│     │           └── humidity_percent
 │     │
 │     ├── Piquete
 │     │     ├── action_type: pasture_zone
@@ -124,20 +128,13 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │     │     └── metadata
 │     │           ├── timestamp
 │     │           ├── stick_id
-│     │           └── operator_id
+│     │           ├── operator_id
+│     │           ├── temperature_c
+│     │           └── humidity_percent
 │     │
-│     ├── Pesagem Automática
-│     │     ├── action_type: auto_weigh
-│     │     ├── mqtt_topic: cattle/event/weight
-│     │     ├── confirmed: true
-│     │     └── metadata
-│     │           ├── timestamp
-│     │           ├── stick_id
-│     │           └── operator_id
-│     │
-│     └── Telemetria
-│           ├── action_type: telemetry
-│           ├── mqtt_topic: stick/telemetry/environment
+│     ├── Pesagem
+│           ├── action_type: auto_weigh
+│           ├── mqtt_topic: cattle/event/weight
 │           ├── confirmed: true
 │           └── metadata
 │                 ├── timestamp
@@ -145,6 +142,7 @@ RFID Stick - Menu (Prototype MQTT Sender)
 │                 ├── operator_id
 │                 ├── temperature_c
 │                 └── humidity_percent
+│     
 │
 └── 7 ─ Cadastro
       ├── action_type: registration
