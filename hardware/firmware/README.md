@@ -317,6 +317,26 @@ mosquitto_pub -h 192.168.51.50 -p 1883 \
 
 ### Verificar broker (conexão e versão)
 
+
+# Monitorar todas as mensagens MQTT no Mosquitto (Docker)
+
+Para escutar todas as mensagens que chegam ao broker MQTT rodando em um container Docker, execute:
+
+```bash
+docker exec -it fazenda-mosquitto mosquitto_sub -h localhost -p 1883 -t "#"
+```
+
+> **Importante:** `fazenda-mosquitto` é o **nome do container Docker** onde o broker Mosquitto está rodando.
+> Esse nome pode mudar dependendo da configuração do projeto ou do Docker Compose.
+> Para descobrir o nome correto no seu ambiente, use:
+
+```bash
+docker ps
+```
+
+O comando acima executa o cliente `mosquitto_sub` dentro do container, conecta ao broker local (`localhost:1883`) e assina o tópico global `#`, exibindo em tempo real todas as mensagens publicadas.
+
+
 ```bash
 mosquitto_sub -h 192.168.51.50 -p 1883 -t '$SYS/broker/version' -C 1
 ```
