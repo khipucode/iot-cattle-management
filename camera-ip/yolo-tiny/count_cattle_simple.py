@@ -1,0 +1,1 @@
+print("Script simplificado placeholder - usar versão completa fornecida no chat")
