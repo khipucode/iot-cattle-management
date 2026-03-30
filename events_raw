@@ -1,13 +1,10 @@
-# Reconstrói as imagens dos serviços que têm Dockerfile
-docker compose -f docker-compose-fazenda.yml build
-
-# Sobe os containers em segundo plano
-docker compose -f docker-compose-fazenda.yml up -d
+# Sobe imagens dos serviços que têm Dockerfile
+docker compose -f docker-compose-fazenda.yml up -d --build
 
 # Para parar os containers (sem remover)
 docker compose -f docker-compose-fazenda.yml stop
 
-# Parar todos os serviços (mantém os containers criados)
+# Parar todos os serviços (mantém os containers criados) e derrubar
 docker compose -f docker-compose-fazenda.yml down
 
 # Derrubar e limpar tudo (containers + volumes) USAR APENAS EM ÚLTIMO CASO SE NÂO SOUBER NÂO USE ESTE COMANDO

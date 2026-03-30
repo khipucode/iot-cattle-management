@@ -6,10 +6,15 @@ cd Pasta_Testes_Populate
 python populate_data.py
 
 # 3. Ou execute via Docker (recomendado)
-docker compose -f ../docker-compose-fazenda.yml up -d gerador-dados
+docker compose -f docker-compose-fazenda.yml up -d gerador-dados
+
+#Para Parar o gerador de dados.
+
+docker compose -f docker-compose-fazenda.yml stop gerador-dados
+
 
 # 4. Verifique os logs
-docker compose -f ../docker-compose-fazenda.yml logs -f gerador-dados
+docker logs -f gerador-dados
 
 # 5. Teste manualmente via MQTT
 mosquitto_sub -h localhost -t "fazenda/sensores/#" -v
@@ -21,7 +26,7 @@ docker compose -f docker-compose-fazenda.yml down
 docker compose -f docker-compose-fazenda.yml down -v
 
 # 8. Ver status dos serviços
-docker compose -f docker-compose-fazenda.yml ps
+docker ps
 
 # 9. Ver logs de todos os serviços.
 docker compose -f docker-compose-fazenda.yml logs -f
