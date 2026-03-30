@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>YOLO Gado</title>
+  <script>
+    function refreshImage() {
+      const img = document.getElementById("frame");
+      img.src = "last_frame.jpg?t=" + new Date().getTime();
+    }
+    setInterval(refreshImage, 1000);
+  </script>
+</head>
+<body>
+  <h2>Contagem de Gado - YOLO</h2>
+  <img id="frame" src="last_frame.jpg" width="800">
+</body>
+</html>
