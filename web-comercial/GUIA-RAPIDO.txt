@@ -1,0 +1,186 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║     🐄 iTrace - GUIA RÁPIDO DE COMANDOS                          ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📌 SETUP INICIAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Clonar repositório:
+   git clone https://github.com/usuario/repo.git
+   cd repo
+
+2. Configurar Git:
+   git config --global user.name "Seu Nome"
+   git config --global user.email "seu@email.com"
+
+3. Criar pasta do vídeo:
+   mkdir public
+   cp "/home/rayane/Downloads/Video boi" public/video-boi.mp4
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚀 ATUALIZAR NO GITHUB (3 comandos)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   git add .
+   git commit -m "Atualização do site"
+   git push origin main
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚡ MODO AUTOMÁTICO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   bash ATUALIZAR-AGORA.sh
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🔍 COMANDOS ÚTEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Ver status:             git status
+Ver histórico:          git log --oneline
+Ver diferenças:         git diff
+Desfazer mudanças:      git reset --hard
+Baixar atualizações:    git pull origin main
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎥 VÍDEO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Verificar tamanho:      bash VERIFICAR-TAMANHO-VIDEO.sh
+Localização correta:    public/video-boi.mp4
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🌐 TESTAR LOCALMENTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Abrir direto:           firefox index.html
+Com Python:             python3 -m http.server 8000
+Com Node:               npx http-server
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📚 GUIAS DISPONÍVEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀-COMECE-AQUI.md              → Para quem acabou de baixar
+PASSO-A-PASSO-VISUAL.md        → Iniciantes absolutos
+COMO-ATUALIZAR-NO-GITHUB.md    → Guia completo Git
+COLA-GIT.md                    → Comandos prontos
+README.md                      → Visão geral
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🐛 PROBLEMAS COMUNS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problema                         Solução
+────────────────────────────────────────────────────────────────
+
+"not a git repository"           cd /caminho/do/projeto
+
+"Please tell me who you are"     git config --global user.name "Nome"
+                                 git config --global user.email "email"
+
+"Permission denied"              git remote set-url origin https://...
+
+"rejected - non-fast-forward"    git pull origin main
+                                 git push origin main
+
+"File too large" (>100MB)        bash VERIFICAR-TAMANHO-VIDEO.sh
+                                 (use Git LFS ou comprima o vídeo)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎯 ESTRUTURA DO PROJETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+itrace-site/
+├── index.html                    ← Página principal
+├── styles.css                    ← Estilos CSS
+├── script.js                     ← JavaScript
+├── public/
+│   └── video-boi.mp4            ← VÍDEO (coloque aqui!)
+├── 🚀-COMECE-AQUI.md
+├── PASSO-A-PASSO-VISUAL.md
+├── COMO-ATUALIZAR-NO-GITHUB.md
+├── COLA-GIT.md
+├── ATUALIZAR-AGORA.sh           ← Script automático
+├── VERIFICAR-TAMANHO-VIDEO.sh
+└── README.md
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□  Clonou o repositório
+□  Configurou nome e email no Git
+□  Criou pasta public/
+□  Copiou video-boi.mp4
+□  Verificou tamanho do vídeo (<100MB)
+□  Testou localmente (firefox index.html)
+□  Fez primeiro commit
+□  Fez push para GitHub
+□  Verificou no GitHub online
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🌐 HOSPEDAR GRÁTIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GitHub Pages:
+1. Repositório no GitHub → Settings
+2. Pages → Source: main branch
+3. Save
+4. Aguarde 5 min
+5. Acesse: https://usuario.github.io/repo/
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎨 PERSONALIZAÇÃO RÁPIDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Mudar textos:         Edite index.html
+Mudar cores:          Edite styles.css (linha 8-24)
+Mudar funcionalidade: Edite script.js
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📊 INFORMAÇÕES TÉCNICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tecnologias:     HTML5 + CSS3 + JavaScript puro
+Tamanho:         ~50KB (ultra leve!)
+Navegadores:     Chrome, Firefox, Safari, Edge
+Responsivo:      Desktop, Tablet, Mobile
+Performance:     <0.5s carregamento
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🆘 PRECISA DE AJUDA?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Leia 🚀-COMECE-AQUI.md
+2. Consulte PASSO-A-PASSO-VISUAL.md
+3. Use COLA-GIT.md como referência
+4. Execute: bash ATUALIZAR-AGORA.sh
+
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║     ✅ Site pronto em HTML/CSS/JS puro!                          ║
+║     💚 Desenvolvido para o Agronegócio Brasileiro                ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+
+Criado para: iTrace - Agro Rastreamento 🐄
+Última atualização: 12/03/2026

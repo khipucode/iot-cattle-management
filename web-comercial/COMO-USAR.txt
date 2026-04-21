@@ -1,0 +1,247 @@
+╔═══════════════════════════════════════════════════════════════════════╗
+║                                                                       ║
+║           🚀 GUIA RÁPIDO - ITRACE DEPLOY                             ║
+║           Atualizado em: 13/03/2026                                  ║
+║                                                                       ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📋 PASSO A PASSO COMPLETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+┌───────────────────────────────────────────────────────────────────────┐
+│  CENÁRIO 1: ENVIAR ATUALIZAÇÕES PARA O GITHUB                        │
+└───────────────────────────────────────────────────────────────────────┘
+
+  1. Abra o terminal no diretório do projeto
+
+  2. Execute o script:
+
+     bash ENVIAR-PARA-GITHUB.sh
+
+  3. Responda "s" quando perguntar se deseja continuar
+
+  4. Aguarde a confirmação! ✅
+
+
+┌───────────────────────────────────────────────────────────────────────┐
+│  CENÁRIO 2: USAR MENU COMPLETO                                       │
+└───────────────────────────────────────────────────────────────────────┘
+
+  1. Execute:
+
+     bash DEPLOY-COMPLETO.sh
+
+  2. Escolha uma opção:
+     
+     [1] Deploy rápido
+     [2] Deploy com mensagem personalizada
+     [3] Ver o que mudou
+     [4] Ver histórico de commits
+     [5] Desfazer último commit
+     [6] Ver configurações
+     [7] Instruções GitHub Pages
+
+  3. Siga as instruções na tela
+
+
+┌───────────────────────────────────────────────────────────────────────┐
+│  CENÁRIO 3: TROCAR VÍDEO                                             │
+└───────────────────────────────────────────────────────────────────────┘
+
+  1. Leia o guia:
+
+     cat VIDEO-CONFIG.md
+
+  2. Ou o guia rápido:
+
+     cat TROCAR-VIDEO-RAPIDO.txt
+
+  3. Edite os arquivos:
+     
+     • /index.html (linha 237)
+     • /src/app/components/video-section.tsx (linha 9)
+
+  4. Cole seu novo link do Google Drive
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎯 COMANDOS MAIS USADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  🚀 Deploy rápido:
+     bash ENVIAR-PARA-GITHUB.sh
+
+
+  🎛️  Menu completo:
+     bash DEPLOY-COMPLETO.sh
+
+
+  👀 Ver o que mudou:
+     git status
+
+
+  📜 Ver histórico:
+     git log --oneline -10
+
+
+  🔙 Voltar um commit (mantém arquivos):
+     git reset --soft HEAD~1
+
+
+  🌐 Ver URL do repo:
+     git remote -v
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📁 ESTRUTURA DO PROJETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  itrace/
+  │
+  ├── 📄 index.html                    ← Site HTML puro
+  │
+  ├── 📂 src/
+  │   └── 📂 app/
+  │       ├── App.tsx                  ← React (Figma Make)
+  │       └── 📂 components/
+  │           ├── hero-section.tsx
+  │           ├── video-section.tsx    ← Seção de vídeo
+  │           ├── pricing-section.tsx
+  │           └── ...
+  │
+  ├── 🚀 ENVIAR-PARA-GITHUB.sh        ← Deploy rápido
+  ├── 🎛️  DEPLOY-COMPLETO.sh           ← Menu completo
+  ├── 🎥 VERIFICAR-TAMANHO-VIDEO.sh    ← Verificar vídeo
+  │
+  ├── 📖 VIDEO-CONFIG.md               ← Guia completo vídeo
+  ├── 📋 TROCAR-VIDEO-RAPIDO.txt       ← Guia rápido vídeo
+  ├── 📚 SCRIPTS-README.md             ← Doc dos scripts
+  └── 📝 COMO-USAR.txt                 ← Este arquivo!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎨 CORES DO PROJETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  🟢 Verde Principal:    #10b981  (Agronegócio)
+  🟢 Verde Escuro:       #059669  (Hover/Destaque)
+  ⬜ Branco:             #ffffff  (Texto claro)
+  ⬛ Cinza:              #6b7280  (Texto secundário)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🔗 LINKS IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  📹 Vídeo atual (Google Drive):
+     https://drive.google.com/file/d/1oYHFi0IOXJJYyM9Q4WYgTeD8HTmJU56n/preview
+
+
+  📦 GitHub:
+     Veja com: git remote -v
+
+
+  🌐 GitHub Pages:
+     https://SEU_USUARIO.github.io/SEU_REPO/
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚡ ATALHOS ÚTEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  # Tornar scripts executáveis
+  chmod +x *.sh
+
+
+  # Executar sem "bash"
+  ./ENVIAR-PARA-GITHUB.sh
+
+
+  # Criar alias (adicione no ~/.bashrc)
+  alias deploy="bash ENVIAR-PARA-GITHUB.sh"
+  alias deploymenu="bash DEPLOY-COMPLETO.sh"
+
+
+  # Depois é só digitar:
+  deploy
+  deploymenu
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🆘 PROBLEMAS COMUNS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  ❌ "Não é repositório Git"
+     → git init
+     → git remote add origin URL_DO_REPO
+
+
+  ❌ "Permissão negada"
+     → git config --global user.name "Seu Nome"
+     → git config --global user.email "seu@email.com"
+
+
+  ❌ "Failed to push"
+     → git pull origin main
+     → git push origin main
+
+
+  ❌ "Script não executa"
+     → chmod +x NOME_DO_SCRIPT.sh
+     → bash NOME_DO_SCRIPT.sh
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  💡 DICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  ✅ Sempre teste localmente antes de fazer deploy
+  ✅ Use mensagens de commit descritivas
+  ✅ Faça commits pequenos e frequentes
+  ✅ Mantenha o vídeo no Google Drive (mais leve)
+  ✅ Verifique o GitHub Pages após cada deploy
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📞 FLUXO DE TRABALHO DIÁRIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  🌅 MANHÃ:
+     1. git pull origin main          ← Atualizar código
+     2. Fazer alterações...
+     3. Testar localmente
+
+
+  🌆 TARDE:
+     4. bash ENVIAR-PARA-GITHUB.sh    ← Enviar para GitHub
+     5. Verificar GitHub Pages
+     6. Testar no celular
+
+
+  🌙 NOITE:
+     7. Revisar commits do dia
+     8. Planejar próximas features
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║                                                                       ║
+║  🎉 TUDO PRONTO! Agora é só usar os scripts!                         ║
+║                                                                       ║
+║  📚 Mais detalhes: SCRIPTS-README.md                                 ║
+║  🎥 Trocar vídeo: VIDEO-CONFIG.md                                    ║
+║                                                                       ║
+╚═══════════════════════════════════════════════════════════════════════╝

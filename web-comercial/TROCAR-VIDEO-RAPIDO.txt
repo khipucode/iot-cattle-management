@@ -1,0 +1,64 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║     🎥 TROCAR VÍDEO - SUPER FÁCIL (3 PASSOS)                    ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 1: PEGUE SEU LINK DO GOOGLE DRIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Exemplo do link que você copiou:
+https://drive.google.com/file/d/ABC123XYZ/view?usp=sharing
+                              ↑↑↑↑↑↑↑↑↑
+                         Isso é o ID do vídeo!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 2: CONVERTA PARA FORMATO EMBED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Troque /view por /preview:
+
+ANTES:  https://drive.google.com/file/d/ABC123XYZ/view
+DEPOIS: https://drive.google.com/file/d/ABC123XYZ/preview
+                                                  ↑↑↑↑↑↑↑
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 3: COLE NOS ARQUIVOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 ARQUIVO 1: /index.html (linha 237)
+
+   Procure por:
+   <iframe src="https://drive.google.com/file/d/...
+
+   Cole seu novo link!
+
+
+📄 ARQUIVO 2: /src/app/components/video-section.tsx (linha 9)
+
+   Procure por:
+   const VIDEO_URL = "https://drive.google.com/file/d/...
+
+   Cole seu novo link entre as aspas!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ✅ LINK ATUAL DO PROJETO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+https://drive.google.com/file/d/1oYHFi0IOXJJYyM9Q4WYgTeD8HTmJU56n/preview
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 💡 DICA: TESTANDO SE FUNCIONA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Copie o link com /preview no final
+2. Cole no navegador
+3. Se aparecer o vídeo = ESTÁ CERTO! ✅
+4. Se der erro = link não está público ❌
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+╔═══════════════════════════════════════════════════════════════════╗
+║  🎉 PRONTO! Agora é só usar o link, sem precisar baixar nada!   ║
+╚═══════════════════════════════════════════════════════════════════╝

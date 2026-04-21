@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="iTrace - Sistema completo de rastreamento de bovinos via RFID e IoT para gestão inteligente do seu rebanho">
+    <meta name="keywords" content="rastreamento bovinos, RFID, gestão rebanho, pecuária, agronegócio">
+    <title>iTrace - Agro Rastreamento | Rastreamento de Bovinos via RFID</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1738596682298-10291848b3f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXR0bGUlMjBwYXN0dXJlJTIwZHJvbmUlMjBhZXJpYWx8ZW58MXx8fHwxNzY4ODM5NzkyfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Pasto com gado">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    <span class="hero-title-main">iTrace</span>
+                    <span class="hero-title-sub">Agro Rastreamento</span>
+                </h1>
+                <div class="hero-divider"></div>
+                <p class="hero-description">
+                    Sistema completo de rastreamento de bovinos via RFID e IoT para gestão inteligente do seu rebanho
+                </p>
+                <button class="btn-primary" onclick="scrollToSection('pricing-section')">
+                    🎯 Ver Planos e Preços
+                </button>
+                <button class="btn-secondary" onclick="scrollToSection('contact-section')" style="margin-top: 1rem;">
+                    ✉️ Fale com Especialista
+                </button>
+            </div>
+            
+            <div class="hero-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="radio"></i>
+                    </div>
+                    <h3>Tecnologia RFID</h3>
+                    <p>Identificação automática e precisa de cada animal do rebanho</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <h3>IA e Visão Computacional</h3>
+                    <p>Drones com inteligência artificial para monitoramento e análise visual do rebanho</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="map-pin"></i>
+                    </div>
+                    <h3>Localização em Tempo Real</h3>
+                    <p>Acompanhe a movimentação do gado entre pastos e instalações</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3>Gestão Eficiente</h3>
+                    <p>Tome decisões baseadas em dados para aumentar a produtividade</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Product Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>O que é o iTrace?</h2>
+                <p>O iTrace é um sistema completo de rastreamento e gestão de bovinos utilizando tecnologia RFID e IoT (Internet das Coisas) com monitoramento por drones, desenvolvido especialmente para a realidade do agronegócio brasileiro.</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-how">
+                    <h3>Como Funciona?</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Identificação com Tag RFID</h4>
+                                <p>Cada animal recebe um brinco eletrônico com chip RFID único e permanente, que funciona como sua "identidade digital".</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Leitura Automática</h4>
+                                <p>Leitores fixos e portáteis captam automaticamente os dados do animal sempre que ele passa por pontos estratégicos (currais, balanças, porteiras).</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Registro no Sistema</h4>
+                                <p>Todas as informações são registradas em tempo real: pesagem, vacinação, movimentação, tratamentos veterinários e localização.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Gestão Inteligente</h4>
+                                <p>Acompanhe todo o rebanho pelo computador ou celular, com relatórios completos, gráficos de desempenho e alertas automáticos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-benefits">
+                    <h3>Benefícios do Sistema</h3>
+                    <ul class="benefits-list">
+                        <li>
+                            <i data-lucide="zap"></i>
+                            <div>
+                                <strong>Identificação Instantânea</strong>
+                                <span>Identifique qualquer animal em segundos, sem erro manual</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-lucide="database"></i>
+                            <div>
+                                <strong>Histórico Completo</strong>
+                                <span>Todos os dados do nascimento ao abate armazenados digitalmente</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-lucide="bar-chart-3"></i>
+                            <div>
+                                <strong>Decisões Baseadas em Dados</strong>
+                                <span>Relatórios e análises para otimizar a produção</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-lucide="shield"></i>
+                            <div>
+                                <strong>Conformidade Legal</strong>
+                                <span>Atende todas as exigências do MAPA e SISBOV</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tech-cards">
+                <div class="card">
+                    <i data-lucide="radio" class="card-icon"></i>
+                    <h4>Tecnologia RFID</h4>
+                    <p>Sistema de identificação por radiofrequência que permite leitura automática e sem contato. Mais rápido, preciso e durável que sistemas tradicionais.</p>
+                </div>
+                
+                <div class="card">
+                    <i data-lucide="brain" class="card-icon"></i>
+                    <h4>IA e Visão Computacional</h4>
+                    <p>Drones equipados com inteligência artificial e visão computacional fazem análise visual do rebanho, identificando localização, contagem automática, detecção de comportamentos anormais e condições de saúde.</p>
+                </div>
+                
+                <div class="card">
+                    <i data-lucide="smartphone" class="card-icon"></i>
+                    <h4>Acesso Mobile</h4>
+                    <p>Gerencie seu rebanho de qualquer lugar através do aplicativo para Android e iOS. Funciona offline no campo com sincronização automática.</p>
+                </div>
+            </div>
+            
+            <div class="why-choose">
+                <h3>Por que escolher o iTrace?</h3>
+                <div class="why-grid">
+                    <div class="why-item">
+                        <h4>✓ Desenvolvido para o Brasil</h4>
+                        <p>Sistema criado pensando nas necessidades e desafios da pecuária brasileira, com suporte em português e adaptado às normas nacionais.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>✓ Tecnologia Comprovada</h4>
+                        <p>RFID é utilizado mundialmente na rastreabilidade animal, sendo o padrão internacional para identificação eletrônica de gado.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>✓ Retorno do Investimento</h4>
+                        <p>Reduza perdas, melhore o controle sanitário e aumente a produtividade. O sistema se paga em média em 12 a 18 meses.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>✓ Suporte Especializado</h4>
+                        <p>Equipe com experiência em pecuária e tecnologia, disponível para tirar suas dúvidas e garantir o melhor uso do sistema.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="video-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Veja o iTrace em Ação</h2>
+                <p>Descubra como a tecnologia está transformando a gestão de rebanhos</p>
+            </div>
+            
+            <div class="video-card">
+                <div class="video-container" id="videoContainer">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="video-icons">
+                            <div class="video-icon-item">
+                                <i data-lucide="plane"></i>
+                                <span>Drone em ação</span>
+                            </div>
+                            <div class="video-icon-item">
+                                <i data-lucide="radio"></i>
+                                <span>Instalação RFID</span>
+                            </div>
+                            <div class="video-icon-item">
+                                <i data-lucide="smartphone"></i>
+                                <span>App iTrace</span>
+                            </div>
+                        </div>
+                        
+                        <button class="play-button" onclick="playVideo()">
+                            <i data-lucide="play"></i>
+                        </button>
+                        
+                        <div class="video-info">
+                            <p class="video-title">Vídeo Demonstrativo</p>
+                            <p class="video-desc">Assista ao funcionamento completo: drone monitorando a fazenda, instalação do brinco RFID e o produtor utilizando o app</p>
+                        </div>
+                    </div>
+                    
+                  <iframe id="mainVideo" class="main-video" style="display:none;" 
+        src="https://drive.google.com/file/d/1x2WwNRSYvL-8Bimx6ykZ3I7VEID9fC80/preview" 
+        allow="autoplay" allowfullscreen>
+</iframe>
+
+
+
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">+500</div>
+                    <p>Fazendas Atendidas</p>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">200mil+</div>
+                    <p>Animais Rastreados</p>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <p>Satisfação</p>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <p>Suporte Disponível</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing-section" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Planos e Preços</h2>
+                <p>Escolha o plano ideal para o tamanho do seu rebanho</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Pequeno Produtor</h3>
+                    <p class="plan-desc">Ideal para rebanhos de até 100 cabeças</p>
+                    <div class="price">R$ 299,00</div>
+                    <ul class="features">
+                        <li><i data-lucide="check"></i> Até 100 animais cadastrados</li>
+                        <li><i data-lucide="check"></i> 100 tags RFID incluídas</li>
+                        <li><i data-lucide="check"></i> 1 leitor RFID portátil</li>
+                        <li><i data-lucide="check"></i> Relatórios básicos</li>
+                        <li><i data-lucide="check"></i> Histórico de 6 meses</li>
+                        <li><i data-lucide="check"></i> Suporte por email</li>
+                        <li><i data-lucide="check"></i> Aplicativo mobile</li>
+                    </ul>
+                    <button class="btn-outline" onclick="scrollToSection('payment-section')">Contratar Plano</button>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <span class="popular-badge">Mais Popular</span>
+                    <h3>Médio Produtor</h3>
+                    <p class="plan-desc">Para rebanhos de até 500 cabeças</p>
+                    <div class="price">R$ 799,00</div>
+                    <ul class="features">
+                        <li><i data-lucide="check"></i> Até 500 animais cadastrados</li>
+                        <li><i data-lucide="check"></i> 500 tags RFID incluídas</li>
+                        <li><i data-lucide="check"></i> 3 leitores RFID portáteis</li>
+                        <li><i data-lucide="check"></i> Relatórios completos e analytics</li>
+                        <li><i data-lucide="check"></i> Histórico ilimitado</li>
+                        <li><i data-lucide="check"></i> Integração com balanças</li>
+                        <li><i data-lucide="check"></i> Suporte prioritário 24/7</li>
+                        <li><i data-lucide="check"></i> Aplicativo mobile premium</li>
+                        <li><i data-lucide="check"></i> Gestão de múltiplos usuários</li>
+                        <li><i data-lucide="check"></i> Alertas automáticos</li>
+                    </ul>
+                    <button class="btn-primary" onclick="scrollToSection('payment-section')">Contratar Plano</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Grande Produtor</h3>
+                    <p class="plan-desc">Para grandes operações e confinamentos</p>
+                    <div class="price">Personalizado</div>
+                    <ul class="features">
+                        <li><i data-lucide="check"></i> Animais ilimitados</li>
+                        <li><i data-lucide="check"></i> Tags RFID sob demanda</li>
+                        <li><i data-lucide="check"></i> Leitores fixos e portáteis</li>
+                        <li><i data-lucide="check"></i> Dashboard empresarial completo</li>
+                        <li><i data-lucide="check"></i> API de integração</li>
+                        <li><i data-lucide="check"></i> Sistema de cerca virtual</li>
+                        <li><i data-lucide="check"></i> Rastreamento GPS (opcional)</li>
+                        <li><i data-lucide="check"></i> Gerente de conta dedicado</li>
+                        <li><i data-lucide="check"></i> Treinamento in loco</li>
+                        <li><i data-lucide="check"></i> SLA garantido</li>
+                        <li><i data-lucide="check"></i> Personalização do sistema</li>
+                    </ul>
+                    <button class="btn-outline" onclick="scrollToSection('payment-section')">Solicitar Orçamento</button>
+                </div>
+            </div>
+            
+            <div class="pricing-note">
+                <h4>💡 Investimento Inteligente</h4>
+                <p>Todos os planos incluem instalação e treinamento.CONSULTE valores de manutenção mensal direto no item Fale Conosco.O sistema se paga com a redução de perdas, aumento da produtividade e melhor gestão do rebanho. Contratos flexíveis sem fidelidade.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section id="payment-section" class="payment-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Formas de Pagamento</h2>
+                <p>Escolha a forma de pagamento mais adequada para sua empresa</p>
+            </div>
+            
+            <div class="plan-selector">
+                <label for="planSelect">Plano Selecionado</label>
+                <select id="planSelect">
+                    <option>Pequeno Produtor - R$ 299,00</option>
+                    <option selected>Médio Produtor - R$ 799,00</option>
+                    <option>Grande Produtor - Orçamento Personalizado</option>
+                </select>
+            </div>
+            
+            <div class="payment-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="credit-card">Cartão</button>
+                    <button class="tab-btn" data-tab="pix">PIX</button>
+                    <button class="tab-btn" data-tab="boleto">Boleto</button>
+                    <button class="tab-btn" data-tab="transfer">Transferência</button>
+                    <button class="tab-btn" data-tab="invoice">Faturamento</button>
+                    <button class="tab-btn" data-tab="financing">Financiamento</button>
+                </div>
+                
+                <div class="tabs-content">
+                    <!-- Cartão de Crédito -->
+                    <div class="tab-panel active" id="credit-card">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <i data-lucide="credit-card"></i>
+                                <div>
+                                    <h3>Cartão de Crédito Empresarial</h3>
+                                    <p>Parcelamento em até 12x sem juros</p>
+                                </div>
+                            </div>
+                            <form class="payment-form">
+                                <div class="form-group">
+                                    <label>Número do Cartão</label>
+                                    <input type="text" placeholder="0000 0000 0000 0000">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Validade</label>
+                                        <input type="text" placeholder="MM/AA">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CVV</label>
+                                        <input type="text" placeholder="123">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nome no Cartão</label>
+                                    <input type="text" placeholder="Nome completo">
+                                </div>
+                                <div class="form-group">
+                                    <label>Parcelas</label>
+                                    <select>
+                                        <option>1x de R$ 799,00</option>
+                                        <option>3x de R$ 266,33</option>
+                                        <option>6x de R$ 133,17</option>
+                                        <option>12x de R$ 66,58</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn-primary" onclick="handlePayment('Cartão de Crédito')">Finalizar Pagamento</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- PIX -->
+                    <div class="tab-panel" id="pix">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <i data-lucide="barcode"></i>
+                                <div>
+                                    <h3>PIX Empresarial</h3>
+                                    <p>Desconto de 5% no pagamento à vista</p>
+                                </div>
+                            </div>
+                            <div class="pix-content">
+                                <div class="qr-code">
+                                    <div class="qr-placeholder">QR Code PIX</div>
+                                </div>
+                                <p>Escaneie o QR Code com o app do seu banco</p>
+                                <code>00020126580014BR.GOV.BCB.PIX...</code>
+                                <div class="pix-benefits">
+                                    <div class="benefit-item">
+                                        <i data-lucide="check"></i>
+                                        <span>Pagamento aprovado instantaneamente</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i data-lucide="check"></i>
+                                        <span>Desconto de 5% aplicado: R$ 759,05</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Boleto -->
+                    <div class="tab-panel" id="boleto">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <i data-lucide="barcode"></i>
+                                <div>
+                                    <h3>Boleto Bancário</h3>
+                                    <p>Desconto de 3% no pagamento à vista</p>
+                                </div>
+                            </div>
+                            <form class="payment-form">
+                                <div class="form-group">
+                                    <label>CPF/CNPJ do Pagador</label>
+                                    <input type="text" placeholder="00.000.000/0000-00">
+                                </div>
+                                <div class="info-box">
+                                    <p>O boleto será gerado após a confirmação e enviado por e-mail. Compensação em até 2 dias úteis.</p>
+                                </div>
+                                <button type="button" class="btn-primary" onclick="handlePayment('Boleto Bancário')">Gerar Boleto</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Transferência -->
+                    <div class="tab-panel" id="transfer">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <i data-lucide="building-2"></i>
+                                <div>
+                                    <h3>Transferência Bancária</h3>
+                                    <p>TED ou DOC para CNPJ</p>
+                                </div>
+                            </div>
+                            <div class="bank-details">
+                                <p><strong>Dados Bancários:</strong></p>
+                                <p><strong>Banco:</strong> Itaú (3x1)</p>
+                                <p><strong>Agência:</strong> 01x3</p>
+                                <p><strong>Conta Corrente:</strong> 1xx45-6</p>
+                                <p><strong>CNPJ:</strong> 1x.3x5.6x8/0x01-x0</p>
+                                <p><strong>Favorecido:</strong> iTrace Agro Rastreamento LTDA</p>
+                            </div>
+                            <div class="info-box warning">
+                                <p>Após realizar a transferência, envie o comprovante para financeiro@itrace.com.br</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Faturamento -->
+                    <div class="tab-panel" id="invoice">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <i data-lucide="file-text"></i>
+                                <div>
+                                    <h3>Faturamento</h3>
+                                    <p>Nota fiscal com prazo de pagamento</p>
+                                </div>
+                            </div>
+                            <form class="payment-form">
+                                <div class="form-group">
+                                    <label>CNPJ da Empresa</label>
+                                    <input type="text" placeholder="00.000.000/0000-00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Razão Social</label>
+                                    <input type="text" placeholder="Nome da empresa">
+                                </div>
+                                <div class="form-group">
+                                    <label>Prazo de Pagamento</label>
+                                    <select>
+                                        <option>30 dias</option>
+                                        <option>60 dias</option>
+                                        <option>90 dias</option>
+                                    </select>
+                                </div>
+                                <div class="info-box">
+                                    <p>Disponível para planos anuais. Nossa equipe entrará em contato para finalizar o processo.</p>
+                                </div>
+                                <button type="button" class="btn-primary" onclick="handlePayment('Faturamento')">Solicitar Faturamento</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Financiamento -->
+                    <div class="tab-panel" id="financing">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <i data-lucide="handshake"></i>
+                                <div>
+                                    <h3>Financiamento Rural</h3>
+                                    <p>Parcerias com bancos especializados</p>
+                                </div>
+                            </div>
+                            <div class="banks-list">
+                                <h4>Bancos Parceiros:</h4>
+                                <ul>
+                                    <li>• Banco do Brasil - PRONAF Mais Alimentos</li>
+                                    <li>• Sicredi - Crédito Rural</li>
+                                    <li>• Santander Agronegócio</li>
+                                    <li>• Banco da Amazônia - FNO Rural</li>
+                                </ul>
+                            </div>
+                            <form class="payment-form">
+                                <div class="form-group">
+                                    <label>Valor do Investimento</label>
+                                    <input type="text" placeholder="R$ 0,00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Banco de Interesse</label>
+                                    <select>
+                                        <option>Selecione um banco</option>
+                                        <option>Banco do Brasil</option>
+                                        <option>Sicredi</option>
+                                        <option>Santander</option>
+                                        <option>Banco da Amazônia</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn-primary" onclick="handlePayment('Financiamento Rural')">Solicitar Contato</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-info">
+                <div class="info-card">
+                    <h4>🔒 Pagamento Seguro</h4>
+                    <p>Todas as transações são protegidas com criptografia SSL de 256 bits. Emitimos nota fiscal paulista para todas as operações.</p>
+                </div>
+                <div class="info-card green">
+                    <h4>🌾 Incentivos Fiscais</h4>
+                    <p>Investimento em tecnologia agropecuária pode ser dedutível do IR. Consulte seu contador sobre os benefícios fiscais disponíveis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="support-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>SAC - Atendimento ao Produtor</h2>
+                <p>Suporte especializado para você e sua equipe</p>
+            </div>
+            
+            <div class="contact-methods">
+                <div class="contact-card">
+                    <i data-lucide="phone"></i>
+                    <h3>Telefone</h3>
+                    <p class="contact-info">xxxx xxx xxxx</p>
+                    <p class="contact-hours"><i data-lucide="clock"></i> Segunda a Sábado, 7h às 19h</p>
+                </div>
+                
+                <div class="contact-card">
+                    <i data-lucide="mail"></i>
+                    <h3>Email</h3>
+                    <p class="contact-info">suporte@itrace.agr.br</p>
+                    <p class="contact-hours"><i data-lucide="clock"></i> Resposta em até 24h</p>
+                </div>
+                
+                <div class="contact-card">
+                    <i data-lucide="message-circle"></i>
+                    <h3>WhatsApp</h3>
+                    <p class="contact-info">(xx) xxxxx-xxxx</p>
+                    <p class="contact-hours"><i data-lucide="clock"></i> Atendimento 24/7</p>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <div class="faq-header">
+                    <i data-lucide="help-circle"></i>
+                    <h3>Perguntas Frequentes</h3>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Como funciona a instalação do sistema RFID?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Nossa equipe técnica faz a instalação completa na sua propriedade. Instalamos os leitores fixos nos pontos estratégicos (currais, balanças, porteiras), entregamos os leitores portáteis e fazemos o treinamento completo da sua equipe. O processo leva de 1 a 3 dias dependendo do tamanho da operação.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            As tags RFID machucam os animais?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Não. As tags RFID são aplicadas como brincos convencionais, de forma rápida e segura. São hipoalergênicas, resistentes e projetadas especificamente para uso em bovinos. Não causam desconforto ao animal.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            O sistema funciona sem internet?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Sim! Os leitores RFID armazenam os dados localmente e sincronizam automaticamente quando há conexão. Você pode trabalhar offline no campo e os dados são enviados ao sistema quando retornar à área com cobertura.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Posso integrar com meu sistema de gestão atual?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Sim. Oferecemos API de integração para conectar com softwares de gestão rural, ERPs e sistemas de controle zootécnico. Nossa equipe técnica auxilia na integração.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            O que acontece se uma tag RFID for perdida ou danificada?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Tags de reposição podem ser adquiridas a qualquer momento. Quando você registra uma nova tag para o animal, todo o histórico é transferido automaticamente, mantendo a rastreabilidade completa.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            O sistema está de acordo com as normas do MAPA?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Sim, completamente. O iTrace está em conformidade com todas as normativas do Ministério da Agricultura (MAPA) para rastreabilidade bovina, incluindo o SISBOV. Geramos todos os relatórios exigidos pela fiscalização.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Qual o alcance dos leitores RFID?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Os leitores portáteis têm alcance de até 1 metro. Os leitores fixos (porteiras automáticas) identificam o animal em movimento até 3 metros de distância, sem necessidade de parar o rebanho.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Como funciona o treinamento da equipe?
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Incluímos treinamento presencial de 8 horas no momento da instalação. Além disso, oferecemos vídeo-aulas, manuais digitais e suporte contínuo por telefone, WhatsApp e email. Para novos colaboradores, disponibilizamos treinamento adicional.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="support-note">
+                <h4>🎯 Assistência Técnica Especializada</h4>
+                <p>Nossa equipe conta com veterinários, zootecnistas e técnicos em TI especializados no setor agropecuário. Entendemos os desafios do campo e estamos prontos para ajudar.</p>
+                <p><strong>Atendimento emergencial:</strong> Para clientes dos planos Médio e Grande Produtor, oferecemos suporte técnico 24/7 para questões urgentes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-left">
+                    <div class="contact-badge">💚 Fale Conosco</div>
+                    <h2>Pronto para Revolucionar a Gestão do Seu Rebanho?</h2>
+                    <p class="contact-subtitle">Nossa equipe de especialistas está pronta para apresentar a melhor solução de rastreamento RFID para sua propriedade.</p>
+                    
+                    <div class="contact-benefits">
+                        <div class="benefit">
+                            <div class="benefit-icon">
+                                <i data-lucide="check-circle"></i>
+                            </div>
+                            <div>
+                                <h4>Consultoria Gratuita</h4>
+                                <p>Análise completa das necessidades da sua propriedade sem compromisso</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit">
+                            <div class="benefit-icon">
+                                <i data-lucide="gift"></i>
+                            </div>
+                            <div>
+                                <h4>Demonstração ao Vivo</h4>
+                                <p>Agende uma demo presencial ou online do sistema completo</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit">
+                            <div class="benefit-icon">
+                                <i data-lucide="calculator"></i>
+                            </div>
+                            <div>
+                                <h4>Orçamento Personalizado</h4>
+                                <p>Plano sob medida para o tamanho do seu rebanho</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-box">
+                        <h4>📞 Prefere Ligar?</h4>
+                        <p class="phone-large">xxxx xxx xxxx</p>
+                        <p class="hours-text">Segunda a Sábado, 7h às 19h</p>
+                    </div>
+                    
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <i data-lucide="shield-check"></i>
+                            <span>Certificado MAPA</span>
+                        </div>
+                        <div class="trust-item">
+                            <i data-lucide="award"></i>
+                            <span>ISO 9001</span>
+                        </div>
+                        <div class="trust-item">
+                            <i data-lucide="users"></i>
+                            <span>+500 Clientes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-right">
+                    <div class="contact-form-card">
+                        <div class="form-header">
+                            <i data-lucide="send"></i>
+                            <h3>Solicite um Contato</h3>
+                            <p>Preencha o formulário e nossa equipe comercial entrará em contato em até 2 horas úteis!</p>
+                        </div>
+                        
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nome">Nome Completo *</label>
+                                    <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="telefone">Telefone/WhatsApp *</label>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Corporativo *</label>
+                                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="empresa">Nome da Fazenda/Empresa</label>
+                                    <input type="text" id="empresa" name="empresa" placeholder="Nome da propriedade">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="rebanho">Tamanho do Rebanho *</label>
+                                    <select id="rebanho" name="rebanho" required>
+                                        <option value="">Selecione</option>
+                                        <option value="ate-100">Até 100 cabeças</option>
+                                        <option value="100-500">100 a 500 cabeças</option>
+                                        <option value="500-1000">500 a 1.000 cabeças</option>
+                                        <option value="1000-5000">1.000 a 5.000 cabeças</option>
+                                        <option value="acima-5000">Acima de 5.000 cabeças</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="estado">Estado *</label>
+                                    <select id="estado" name="estado" required>
+                                        <option value="">Selecione</option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="interesse">Interesse Principal *</label>
+                                    <select id="interesse" name="interesse" required>
+                                        <option value="">Selecione</option>
+                                        <option value="conhecer">Conhecer o sistema</option>
+                                        <option value="orcamento">Solicitar orçamento</option>
+                                        <option value="demo">Agendar demonstração</option>
+                                        <option value="comprar">Fechar contrato</option>
+                                        <option value="duvidas">Tirar dúvidas</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mensagem">Como podemos ajudar? *</label>
+                                <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte-nos sobre sua necessidade, dúvidas ou interesse no iTrace..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group-checkbox">
+                                <input type="checkbox" id="aceite" name="aceite" required>
+                                <label for="aceite">Aceito receber contato da equipe iTrace e estou de acordo com a <a href="#">Política de Privacidade</a></label>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i data-lucide="send"></i>
+                                Enviar Solicitação
+                            </button>
+                            
+                            <p class="form-disclaimer">🔒 Seus dados estão seguros e protegidos conforme LGPD. Resposta garantida em até 2 horas úteis!</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="radio"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-name">iTrace</span>
+                            <span class="logo-tagline">AGRO RASTREAMENTO</span>
+                        </div>
+                    </div>
+                    <p>Tecnologia RFID e IA para gestão inteligente de bovinos e controle total do seu rebanho.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Soluções</h3>
+                    <ul>
+                        <li><a href="#">Rastreamento RFID</a></li>
+                        <li><a href="#">Gestão de Rebanho</a></li>
+                        <li><a href="#">Controle Sanitário</a></li>
+                        <li><a href="#">Relatórios e Analytics</a></li>
+                        <li><a href="#">Aplicativo Mobile</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Empresa</h3>
+                    <ul>
+                        <li><a href="#">Sobre a iTrace</a></li>
+                        <li><a href="#">Cases de Sucesso</a></li>
+                        <li><a href="#">Blog Agro</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Documentação Técnica</a></li>
+                        <li><a href="#">Tutoriais em Vídeo</a></li>
+                        <li><a href="#">Status do Sistema</a></li>
+                        <li><a href="#">Conformidade MAPA</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 iTrace Agro Rastreamento. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Política de Privacidade</a>
+                    <a href="#">LGPD</a>
+                </div>
+            </div>
+            <p class="footer-compliance">Sistema em conformidade com as normas do MAPA - Ministério da Agricultura, Pecuária e Abastecimento</p>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/5513974161617?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20iTrace%20-%20Rastreamento%20de%20Bovinos" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco no WhatsApp">
+        <i data-lucide="message-circle"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
